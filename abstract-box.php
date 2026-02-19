@@ -7,7 +7,7 @@ ob_start(); // Start output buffering
  * Description: Adds a chic and modernist "Abstract" section to posts via a shortcode [abstract].
  * Version: 1.1
  * Author: MENJ
- * Author URI: https://menj.net
+ * Author URI: https://menj.org
  */
 
 // Function to register the Customizer settings
@@ -68,6 +68,112 @@ function abstract_shortcode($atts = [], $content = null) {
 }
 
 add_shortcode('abstract', 'abstract_shortcode');
+
+/**
+ * Output schema.org JSON-LD for the Abstract shortcode (property: abstract).
+ * - Only outputs on singular frontend views.
+ * - Extracts the first [abstract] shortcode instance from the post content.
+ * - Outputs a minimal CreativeWork node to reduce conflicts with SEO plugins' Article graphs.
+ */
+function abstract_box_output_abstract_schema_jsonld() {
+    if (is_admin() || !is_singular()) {
+        return;
+    }
+
+    static $done = false;
+    if ($done) {
+        return;
+    }
+
+    global $post;
+    if (empty($post) || empty($post->post_content)) {
+        return;
+    }
+
+    // Allow themes/plugins to disable output.
+    $enabled = apply_filters('abstract_box_output_schema', true, $post);
+    if (!$enabled) {
+        return;
+    }
+
+    if (!has_shortcode($post->post_content, 'abstract')) {
+        return;
+    }
+
+    $pattern = get_shortcode_regex(array('abstract'));
+    if (!preg_match_all('/' . $pattern . '/s', $post->post_content, $matches, PREG_SET_ORDER)) {
+        return;
+    }
+
+    $first = $matches[0];
+
+    // Shortcode parts: [0]=full match, [3]=attrs, [5]=content (enclosed shortcode).
+    $attrs = array();
+    if (isset($first[3]) && $first[3] !== '') {
+        $attrs = shortcode_parse_atts($first[3]);
+        if (!is_array($attrs)) {
+            $attrs = array();
+        }
+    }
+
+    $shortcode_content = isset($first[5]) ? $first[5] : '';
+    if ($shortcode_content === '') {
+        return;
+    }
+
+    // Convert to plain text for schema abstract.
+    $abstract_text = wp_strip_all_tags(do_shortcode($shortcode_content), true);
+    $abstract_text = preg_replace('/\s+/u', ' ', $abstract_text);
+    $abstract_text = trim($abstract_text);
+
+    if ($abstract_text === '') {
+        return;
+    }
+
+    $permalink = get_permalink($post);
+    if (!$permalink) {
+        return;
+    }
+
+    $author_name = '';
+    $author_id = (int) get_post_field('post_author', $post->ID);
+    if ($author_id > 0) {
+        $author_name = get_the_author_meta('display_name', $author_id);
+    }
+
+    $schema_type = apply_filters('abstract_box_schema_type', 'CreativeWork', $post);
+
+    $schema = array(
+        '@context' => 'https://schema.org',
+        '@type'    => $schema_type,
+        '@id'      => trailingslashit($permalink) . '#abstract',
+        'url'      => $permalink,
+        'name'     => get_the_title($post),
+        'abstract' => $abstract_text,
+        'datePublished' => get_the_date('c', $post),
+        'dateModified'  => get_the_modified_date('c', $post),
+    );
+
+    if (!empty($author_name)) {
+        $schema['author'] = array(
+            '@type' => 'Person',
+            'name'  => $author_name,
+        );
+    }
+
+    // Optional subtitle from shortcode attrs (stored as alternativeName).
+    if (!empty($attrs['subtitle'])) {
+        $schema['alternativeName'] = wp_strip_all_tags((string) $attrs['subtitle'], true);
+    }
+
+    $schema = apply_filters('abstract_box_schema_payload', $schema, $post, $attrs, $shortcode_content);
+
+    echo "\n" . '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
+
+    $done = true;
+}
+add_action('wp_head', 'abstract_box_output_abstract_schema_jsonld', 20);
+
 
 ob_end_clean(); // Clean output buffer
 
