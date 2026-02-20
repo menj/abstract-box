@@ -5,10 +5,23 @@ ob_start(); // Start output buffering
  * Plugin Name: Abstract Box
  * Plugin URI: https://menj.net/abstract-box
  * Description: Adds a chic and modernist "Abstract" section to posts via a shortcode [abstract].
- * Version: 1.1
+ * Version: 1.2
  * Author: MENJ
  * Author URI: https://menj.org
  */
+
+
+
+// Sanitize checkbox values from Customizer.
+function abstract_box_sanitize_checkbox($checked) {
+    return (bool) $checked;
+}
+
+// Sanitize style selection from Customizer.
+function abstract_box_sanitize_style($style) {
+    $valid_styles = array('default', 'custom');
+    return in_array($style, $valid_styles, true) ? $style : 'default';
+}
 
 // Function to register the Customizer settings
 function abstract_box_customizer($wp_customize) {
@@ -21,7 +34,7 @@ function abstract_box_customizer($wp_customize) {
     // Add a setting for using theme CSS
     $wp_customize->add_setting('abstract_box_use_theme_css', array(
         'default' => false,
-        'sanitize_callback' => 'absint',
+        'sanitize_callback' => 'abstract_box_sanitize_checkbox',
     ));
 
     // Add a control for the setting
@@ -181,7 +194,7 @@ ob_end_clean(); // Clean output buffer
 function abstract_box_custom_style($wp_customize) {
     $wp_customize->add_setting('abstract_box_style', array(
         'default' => 'default',
-        'sanitize_callback' => 'absint',
+        'sanitize_callback' => 'abstract_box_sanitize_style',
     ));
 
     $wp_customize->add_control('abstract_box_style_control', array(

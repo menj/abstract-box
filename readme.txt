@@ -6,7 +6,7 @@ Tags: abstract, shortcode, content, box, modern
 Requires at least: 5.2
 Tested up to: 5.9
 Requires PHP: 7.2
-Stable tag: 1.0
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,10 @@ You can also customize the title of the "Abstract" section using the 'title' att
 [abstract title="Key Insights"]Your customized abstract content here.[/abstract]
 
 == Changelog ==
+
+= 1.2 =
+* Fixed Customizer sanitization callbacks for checkbox and style select settings.
+* Improved setting validation for allowed style values.
 
 = 1.0 =
 * Initial release.
