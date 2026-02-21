@@ -3,7 +3,7 @@
  * Plugin Name: Abstract Box
  * Plugin URI:  https://menj.net/abstract-box
  * Description: Adds a chic and modernist "Abstract" section to posts via a shortcode [abstract], with schema.org JSON-LD structured data output.
- * Version:     2.0.0
+ * Version:     2.0.4
  * Author:      MENJ
  * Author URI:  https://menj.org
  * License:     GPLv2 or later
@@ -18,16 +18,16 @@ defined( 'ABSPATH' ) || exit;
 
 /* ── Constants ─────────────────────────────────────────────────────── */
 
-define( 'ABSTRACT_BOX_VERSION', '2.0.0' );
+define( 'ABSTRACT_BOX_VERSION', '2.0.4' );
 define( 'ABSTRACT_BOX_FILE',    __FILE__ );
 define( 'ABSTRACT_BOX_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'ABSTRACT_BOX_URL',     plugin_dir_url( __FILE__ ) );
 
-/* ── Internationalisation ──────────────────────────────────────────── */
-
-add_action( 'init', function () {
-    load_plugin_textdomain( 'abstract-box', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-} );
+/*
+ * Internationalisation: WordPress automatically loads translations for
+ * plugins that follow the standard text-domain slug convention (WP 4.6+).
+ * The Text Domain and Domain Path headers above are sufficient.
+ */
 
 /* ── Module Loader ─────────────────────────────────────────────────── */
 

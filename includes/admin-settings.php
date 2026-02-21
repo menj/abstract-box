@@ -91,7 +91,15 @@ function abstract_box_render_settings_page() {
         return;
     }
 
-    $active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'appearance';
+    // Determine active tab from the URL query string.
+    // Tab links carry a nonce so we can verify before reading $_GET['tab'].
+    $active_tab = 'appearance';
+    if ( isset( $_GET['tab'], $_GET['_ab_tab_nonce'] )
+        && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_ab_tab_nonce'] ) ), 'abstract_box_tab_nav' )
+    ) {
+        $active_tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
+    }
+
     $tabs = array(
         'appearance' => __( 'Appearance', 'abstract-box' ),
         'schema'     => __( 'Schema', 'abstract-box' ),
@@ -101,13 +109,25 @@ function abstract_box_render_settings_page() {
     if ( ! array_key_exists( $active_tab, $tabs ) ) {
         $active_tab = 'appearance';
     }
+
+    // Pre-generate the tab nonce for navigation links.
+    $tab_nonce = wp_create_nonce( 'abstract_box_tab_nav' );
     ?>
     <div class="wrap abstract-box-settings">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
         <nav class="nav-tab-wrapper abstract-box-tabs">
-            <?php foreach ( $tabs as $slug => $label ) : ?>
-                <a href="<?php echo esc_url( add_query_arg( 'tab', $slug, admin_url( 'options-general.php?page=abstract-box' ) ) ); ?>"
+            <?php foreach ( $tabs as $slug => $label ) :
+                $tab_url = add_query_arg(
+                    array(
+                        'page'          => 'abstract-box',
+                        'tab'           => $slug,
+                        '_ab_tab_nonce' => $tab_nonce,
+                    ),
+                    admin_url( 'options-general.php' )
+                );
+            ?>
+                <a href="<?php echo esc_url( $tab_url ); ?>"
                    class="nav-tab <?php echo ( $active_tab === $slug ) ? 'nav-tab-active' : ''; ?>">
                     <?php echo esc_html( $label ); ?>
                 </a>
@@ -116,6 +136,8 @@ function abstract_box_render_settings_page() {
 
         <form method="post" action="options.php" class="abstract-box-form">
             <?php
+            // settings_fields() outputs the nonce, action, and option_page hidden fields
+            // that options.php verifies on submission (capability + nonce).
             settings_fields( 'abstract_box_group' );
 
             // Render only the active tab's section.
@@ -141,7 +163,17 @@ function abstract_box_render_settings_page() {
         <div class="abstract-box-preview-panel">
             <h3><?php esc_html_e( 'Preview', 'abstract-box' ); ?></h3>
             <div class="abstract-box-preview-container">
-                <?php echo abstract_box_render_preview(); ?>
+                <?php
+                // Preview contains only div/h2/p with style attributes — allow exactly that.
+                echo wp_kses(
+                    abstract_box_render_preview(),
+                    array(
+                        'div' => array( 'style' => array() ),
+                        'h2'  => array( 'style' => array() ),
+                        'p'   => array( 'style' => array() ),
+                    )
+                );
+                ?>
             </div>
         </div>
     </div>
@@ -188,21 +220,41 @@ function abstract_box_hidden_fields_for_inactive_tabs( $active_tab ) {
 /**
  * Render a static HTML preview of the abstract box.
  *
- * @return string HTML preview.
+ * Every dynamic value is escaped individually at point of insertion:
+ *   - Hex colours  → sanitize_hex_color() (returns empty string on failure).
+ *   - Font stack   → esc_attr() (attribute context inside style="").
+ *   - Radius int   → absint()  (forces non-negative integer).
+ *   - Text strings → esc_html__() (translatable plain text).
+ *
+ * The composite style string is then passed through esc_attr() when
+ * placed into the style="" attribute for defence-in-depth.
+ *
+ * @return string Escaped HTML safe for output with wp_kses().
  */
 function abstract_box_render_preview() {
     $options    = abstract_box_get_options();
-    $font_stack = abstract_box_font_stack( $options['font_family'] );
+    $font_stack = esc_attr( abstract_box_font_stack( $options['font_family'] ) );
 
-    $style  = "font-family: {$font_stack};";
-    $style .= "background-image: linear-gradient(to right top, {$options['bg_color']}, {$options['bg_color_end']});";
-    $style .= "border-radius: {$options['border_radius']}px;";
-    $style .= "border-left: 3px solid {$options['accent_color']};";
-    $style .= "padding: 16px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.08);";
+    // Sanitise each colour individually before interpolation.
+    $bg_color     = sanitize_hex_color( $options['bg_color'] ) ?: '#f8fafc';
+    $bg_color_end = sanitize_hex_color( $options['bg_color_end'] ) ?: '#ffffff';
+    $accent_color = sanitize_hex_color( $options['accent_color'] ) ?: '#3b82f6';
+    $title_color  = sanitize_hex_color( $options['title_color'] ) ?: '#1e293b';
+    $text_color   = sanitize_hex_color( $options['text_color'] ) ?: '#334155';
+    $radius       = absint( $options['border_radius'] );
 
-    $html  = '<div style="' . esc_attr( $style ) . '">';
-    $html .= '<h2 style="color:' . esc_attr( $options['title_color'] ) . '; font-size:18px; margin:0 0 8px; font-weight:600;">' . esc_html__( 'Abstract', 'abstract-box' ) . '</h2>';
-    $html .= '<p style="color:' . esc_attr( $options['text_color'] ) . '; font-size:14px; line-height:1.6; margin:0; text-align:justify;">';
+    // Build the container style from pre-sanitised values.
+    $container_style  = 'font-family: ' . $font_stack . ';';
+    $container_style .= 'background-image: linear-gradient(to right top, ' . $bg_color . ', ' . $bg_color_end . ');';
+    $container_style .= 'border-radius: ' . $radius . 'px;';
+    $container_style .= 'border-left: 3px solid ' . $accent_color . ';';
+    $container_style .= 'padding: 16px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.08);';
+
+    $html  = '<div style="' . esc_attr( $container_style ) . '">';
+    $html .= '<h2 style="' . esc_attr( 'color: ' . $title_color . '; font-size:18px; margin:0 0 8px; font-weight:600;' ) . '">';
+    $html .= esc_html__( 'Abstract', 'abstract-box' );
+    $html .= '</h2>';
+    $html .= '<p style="' . esc_attr( 'color: ' . $text_color . '; font-size:14px; line-height:1.6; margin:0; text-align:justify;' ) . '">';
     $html .= esc_html__( 'This is a preview of how your abstract box will appear on posts. The colours, font family, and border radius shown here reflect your current settings.', 'abstract-box' );
     $html .= '</p></div>';
 
