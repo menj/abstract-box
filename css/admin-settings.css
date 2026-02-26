@@ -1,31 +1,104 @@
 /**
  * Abstract Box — Admin Settings Styles
  *
- * Clean, modernist admin interface consistent with
- * the MENJ plugin suite design language.
+ * Modernist, card-based admin UI inspired by the MENJ plugin suite.
+ * Rounded corners, gradient accents, slate colour palette.
  *
  * @package AbstractBox
- * @since   2.0.0
+ * @since   2.1.7
  */
 
 /* ── Page wrapper ──────────────────────────────────────────────────── */
 
 .abstract-box-settings {
-    max-width: 840px;
+    max-width: 860px;
+    margin-top: 0;
 }
 
-.abstract-box-settings h1 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: #1e293b;
-    margin-bottom: 16px;
+/* Hide default WP h1 — we render our own header card */
+.abstract-box-settings > h1 {
+    display: none;
+}
+
+/* ── Plugin header card ────────────────────────────────────────────── */
+
+.ab-header {
+    background: linear-gradient(135deg, #1B3C53 0%, #2E6A8E 60%, #3b82f6 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.ab-header__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ab-header__icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ab-header__icon svg {
+    width: 26px;
+    height: 26px;
+    fill: #ffffff;
+}
+
+.ab-header__title {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.ab-header__subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    margin: 3px 0 0;
+}
+
+.ab-header__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.ab-header__version {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
 }
 
 /* ── Tabs ──────────────────────────────────────────────────────────── */
 
 .abstract-box-tabs {
-    margin-bottom: 0;
+    background: #ffffff;
+    border-radius: 0;
+    border: none;
     border-bottom: 1px solid #e2e8f0;
+    margin: 0;
+    padding: 0 8px;
+    display: flex;
+    gap: 0;
 }
 
 .abstract-box-tabs .nav-tab {
@@ -35,9 +108,22 @@
     color: #64748b;
     font-weight: 500;
     font-size: 13px;
-    padding: 10px 16px;
+    padding: 13px 18px 11px;
     margin-bottom: -1px;
+    margin-right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     transition: color 0.15s ease, border-color 0.15s ease;
+    box-shadow: none;
+}
+
+.abstract-box-tabs .nav-tab svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.15s;
 }
 
 .abstract-box-tabs .nav-tab:hover,
@@ -45,73 +131,155 @@
     background: transparent;
     color: #1e293b;
     border-bottom-color: #cbd5e1;
+    box-shadow: none;
+}
+
+.abstract-box-tabs .nav-tab:hover svg,
+.abstract-box-tabs .nav-tab:focus svg {
+    opacity: 1;
 }
 
 .abstract-box-tabs .nav-tab-active,
 .abstract-box-tabs .nav-tab-active:hover,
 .abstract-box-tabs .nav-tab-active:focus {
     background: transparent;
-    color: #1e293b;
-    border-bottom-color: #3b82f6;
+    color: #1B3C53;
+    border-bottom-color: #2E6A8E;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.abstract-box-tabs .nav-tab-active svg {
+    opacity: 1;
+}
+
+/* ── Tab + form wrapper ────────────────────────────────────────────── */
+
+.ab-tab-panel {
+    background: #f1f5f9;
+    border-radius: 0 0 16px 16px;
+    padding: 24px;
 }
 
 /* ── Form ──────────────────────────────────────────────────────────── */
 
 .abstract-box-form {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    padding: 24px 28px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
 }
 
 .abstract-box-form .form-table {
     margin-top: 0;
+    background: transparent;
 }
 
-.abstract-box-form .form-table th {
-    font-weight: 500;
-    color: #334155;
-    padding: 16px 12px 16px 0;
-    font-size: 13px;
-    width: 180px;
+/* Section heading rows (WordPress settings section titles) */
+.abstract-box-form h2,
+.abstract-box-form .ab-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 10px;
+    padding: 0;
+    border: none;
 }
 
+/* ── Setting cards ─────────────────────────────────────────────────── */
+
+.abstract-box-form .form-table th,
 .abstract-box-form .form-table td {
-    padding: 16px 0;
+    display: block;
+    padding: 0;
+    width: auto;
 }
 
 .abstract-box-form .form-table tr {
-    border-bottom: 1px solid #f1f5f9;
+    display: block;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.abstract-box-form .form-table tr:hover {
+    border-color: #c8d5e4;
+    box-shadow: 0 2px 8px rgba(27, 60, 83, 0.06);
 }
 
 .abstract-box-form .form-table tr:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
-.abstract-box-form select,
-.abstract-box-form input[type="text"],
-.abstract-box-form input[type="number"] {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 13px;
+.abstract-box-form .form-table th {
+    font-weight: 600;
     color: #1e293b;
-    transition: border-color 0.15s ease;
+    font-size: 13.5px;
+    padding-bottom: 2px;
+    border: none;
 }
 
-.abstract-box-form select:focus,
-.abstract-box-form input[type="text"]:focus,
-.abstract-box-form input[type="number"]:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
-    outline: none;
+.abstract-box-form .form-table td {
+    padding-top: 4px;
+    border: none;
 }
 
 .abstract-box-form .description {
     color: #94a3b8;
     font-size: 12px;
-    margin-top: 4px;
+    margin-top: 6px;
+    display: block;
+    line-height: 1.5;
+}
+
+/* ── Inputs ────────────────────────────────────────────────────────── */
+
+.abstract-box-form select,
+.abstract-box-form input[type="text"],
+.abstract-box-form input[type="number"] {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 7px 11px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #f8fafc;
+    margin-top: 8px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    max-width: 220px;
+}
+
+.abstract-box-form select:focus,
+.abstract-box-form input[type="text"]:focus,
+.abstract-box-form input[type="number"]:focus {
+    border-color: #2E6A8E;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(46, 106, 142, 0.12);
+    outline: none;
+}
+
+/* ── Colour picker rows ─────────────────────────────────────────────── */
+
+.abstract-box-form .form-table tr.ab-color-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.abstract-box-form .form-table tr.ab-color-row th {
+    flex: 1;
+    min-width: 160px;
+}
+
+.abstract-box-form .form-table tr.ab-color-row td {
+    flex-shrink: 0;
+    padding-top: 0;
 }
 
 /* ── Colour Presets ────────────────────────────────────────────────── */
@@ -119,80 +287,106 @@
 .abstract-box-presets {
     display: flex;
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
 }
 
 .abstract-box-preset-btn {
-    border-radius: 6px;
-    padding: 2px 12px;
+    border-radius: 20px;
+    padding: 4px 14px;
     font-size: 12px;
+    font-weight: 500;
+    border: 1.5px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.abstract-box-preset-btn:hover {
+    border-color: #2E6A8E;
+    color: #2E6A8E;
+    background: #f0f7ff;
 }
 
 /* ── Submit button ─────────────────────────────────────────────────── */
 
+.abstract-box-form .submit {
+    margin-top: 20px;
+    padding: 0;
+}
+
 .abstract-box-form .submit .button-primary {
-    background: #1e293b;
+    background: linear-gradient(135deg, #1B3C53 0%, #2E6A8E 100%);
     border: none;
-    border-radius: 6px;
-    padding: 8px 20px;
-    font-size: 13px;
-    font-weight: 500;
+    border-radius: 10px;
+    padding: 10px 28px;
+    font-size: 13.5px;
+    font-weight: 600;
     letter-spacing: 0.01em;
-    transition: background 0.15s ease;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(27, 60, 83, 0.25);
+    transition: opacity 0.15s ease, box-shadow 0.15s ease;
+    height: auto;
+    line-height: 1.5;
 }
 
 .abstract-box-form .submit .button-primary:hover,
 .abstract-box-form .submit .button-primary:focus {
-    background: #334155;
+    background: linear-gradient(135deg, #1B3C53 0%, #2E6A8E 100%);
+    opacity: 0.88;
+    box-shadow: 0 4px 12px rgba(27, 60, 83, 0.30);
+    color: #ffffff;
+    border: none;
+    outline: none;
 }
 
 /* ── Preview panel ─────────────────────────────────────────────────── */
 
 .abstract-box-preview-panel {
-    margin-top: 24px;
+    margin-top: 20px;
 }
 
 .abstract-box-preview-panel h3 {
-    font-weight: 600;
-    font-size: 13px;
-    color: #64748b;
+    font-weight: 700;
+    font-size: 10px;
+    color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
 }
 
 .abstract-box-preview-container {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 24px;
 }
-/* ── Usage tab ─────────────────────────────────────────────────────── */
+
+/* ── Usage tab panel ───────────────────────────────────────────────── */
 
 .abstract-box-usage {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    padding: 28px 32px 32px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
 }
 
 .ab-usage-section {
-    padding-bottom: 28px;
-    margin-bottom: 28px;
-    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 12px;
 }
 
 .ab-usage-section--last {
-    padding-bottom: 0;
     margin-bottom: 0;
-    border-bottom: none;
 }
 
 .ab-usage-heading {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: #1e293b;
     letter-spacing: -0.01em;
     margin: 0 0 12px;
@@ -221,7 +415,8 @@
     padding: 0;
 }
 
-.ab-usage-steps li {
+.ab-usage-steps li,
+.ab-usage-list li {
     font-size: 13px;
     color: #475569;
     line-height: 1.65;
@@ -234,15 +429,7 @@
     padding: 0;
 }
 
-.ab-usage-list li {
-    font-size: 13px;
-    color: #475569;
-    line-height: 1.65;
-    margin-bottom: 6px;
-    padding-left: 4px;
-}
-
-/* ── Code blocks with copy button ──────────────────────────────────── */
+/* ── Code blocks ───────────────────────────────────────────────────── */
 
 .ab-code-block {
     display: flex;
@@ -250,7 +437,7 @@
     gap: 10px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 12px 14px;
     margin: 0 0 12px;
 }
@@ -268,22 +455,21 @@
 
 .ab-copy-btn {
     flex-shrink: 0;
-    background: #1e293b;
+    background: linear-gradient(135deg, #1B3C53, #2E6A8E);
     color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 4px 12px;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: opacity 0.15s ease;
     align-self: flex-start;
-    margin-top: 1px;
 }
 
 .ab-copy-btn:hover,
 .ab-copy-btn:focus {
-    background: #334155;
+    opacity: 0.85;
     outline: none;
 }
 
@@ -326,9 +512,9 @@
 .ab-usage-table td code,
 .ab-usage-table th code {
     background: #f1f5f9;
-    color: #1e293b;
-    border-radius: 3px;
-    padding: 1px 5px;
+    color: #1B3C53;
+    border-radius: 4px;
+    padding: 2px 6px;
     font-size: 11.5px;
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
     white-space: nowrap;
@@ -339,22 +525,27 @@
 .ab-style-comparison {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 12px;
     margin: 12px 0 16px;
 }
 
 .ab-style-card {
     background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
     padding: 16px 18px;
+    transition: border-color 0.15s ease;
+}
+
+.ab-style-card:hover {
+    border-color: #2E6A8E;
 }
 
 .ab-style-card h4 {
     font-size: 13px;
     font-weight: 600;
     color: #1e293b;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     padding: 0;
 }
 
@@ -366,16 +557,24 @@
 }
 
 .ab-usage-note {
-    background: #f0f9ff;
-    border-left: 3px solid #3b82f6;
-    border-radius: 0 6px 6px 0;
+    background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+    border-left: 3px solid #2E6A8E;
+    border-radius: 0 8px 8px 0;
     padding: 10px 14px;
     font-size: 12.5px !important;
-    color: #0369a1 !important;
+    color: #1B3C53 !important;
     margin-top: 4px !important;
 }
 
-@media (max-width: 600px) {
+/* ── Responsive ────────────────────────────────────────────────────── */
+
+@media (max-width: 660px) {
+    .ab-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
     .ab-style-comparison {
         grid-template-columns: 1fr;
     }
@@ -386,5 +585,9 @@
 
     .ab-copy-btn {
         align-self: flex-start;
+    }
+
+    .abstract-box-form .form-table tr.ab-color-row {
+        flex-direction: column;
     }
 }
