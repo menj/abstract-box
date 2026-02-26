@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Abstract Box
- * Plugin URI:  https://menj.net/abstract-box
+ * Plugin URI:  https://github.com/menj/abstract-box
  * Description: Adds a chic and modernist "Abstract" section to posts via a shortcode [abstract], with schema.org JSON-LD structured data output.
- * Version:     2.0.4
+ * Version:     2.1.3
  * Author:      MENJ
- * Author URI:  https://menj.org
+ * Author URI:  https://github.com/menj
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: abstract-box
@@ -18,25 +18,49 @@ defined( 'ABSPATH' ) || exit;
 
 /* ── Constants ─────────────────────────────────────────────────────── */
 
-define( 'ABSTRACT_BOX_VERSION', '2.0.4' );
+define( 'ABSTRACT_BOX_VERSION', '2.1.3' );
 define( 'ABSTRACT_BOX_FILE',    __FILE__ );
 define( 'ABSTRACT_BOX_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'ABSTRACT_BOX_URL',     plugin_dir_url( __FILE__ ) );
 
-/*
- * Internationalisation: WordPress automatically loads translations for
- * plugins that follow the standard text-domain slug convention (WP 4.6+).
- * The Text Domain and Domain Path headers above are sufficient.
- */
+/* ── Autoloader ────────────────────────────────────────────────────── */
 
-/* ── Module Loader ─────────────────────────────────────────────────── */
+spl_autoload_register( function ( $class ) {
+    $prefix = 'Menj\\AbstractBox\\';
+    $base_dir = ABSTRACT_BOX_DIR . 'inc/';
 
-require_once ABSTRACT_BOX_DIR . 'includes/helpers.php';
-require_once ABSTRACT_BOX_DIR . 'includes/shortcode.php';
-require_once ABSTRACT_BOX_DIR . 'includes/schema.php';
-require_once ABSTRACT_BOX_DIR . 'includes/enqueue.php';
-require_once ABSTRACT_BOX_DIR . 'includes/customizer.php';
+    $len = strlen( $prefix );
+    if ( strncmp( $prefix, $class, $len ) !== 0 ) {
+        return;
+    }
 
-if ( is_admin() ) {
-    require_once ABSTRACT_BOX_DIR . 'includes/admin-settings.php';
+    $relative_class = substr( $class, $len );
+    $file = $base_dir . str_replace( '\\', '/', strtolower( $relative_class ) ) . '.php';
+
+    if ( file_exists( $file ) ) {
+        require $file;
+    }
+} );
+
+/* ── Plugin Initialisation ─────────────────────────────────────────── */
+
+function abstract_box_init() {
+    ( new \Menj\AbstractBox\Admin\Settings() )->init();
+    ( new \Menj\AbstractBox\Admin\Customizer() )->init();
+    ( new \Menj\AbstractBox\Frontend\Block() )->init(); 
+    ( new \Menj\AbstractBox\Frontend\Shortcode() )->init();
+    ( new \Menj\AbstractBox\Frontend\Schema() )->init();
+    ( new \Menj\AbstractBox\Assets() )->init();
 }
+
+add_action( 'plugins_loaded', 'abstract_box_init' );
+
+/* ── Plugin Action Links ───────────────────────────────────────────── */
+
+function abstract_box_plugin_action_links( $links ) {
+    $settings_link = '<a href="' . esc_url( admin_url( 'options-general.php?page=abstract-box' ) ) . '">' . __( 'Settings', 'abstract-box' ) . '</a>';
+    array_unshift( $links, $settings_link );
+    return $links;
+}
+
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'abstract_box_plugin_action_links' );
