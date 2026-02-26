@@ -4,8 +4,8 @@ Donate link: https://paypal.me/menj
 Tags: abstract, shortcode, academic, schema, modernist
 Requires at least: 6.0
 Tested up to: 6.9
-Requires PHP: 8.2
-Stable tag: 2.1.3
+Requires PHP: 7.4
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,8 +64,32 @@ CreativeWork (the default) is recommended as it avoids conflicts with Article gr
 
 == Changelog ==
 
+= 2.1.7 =
+* Changed: Redesigned admin UI with card-based layout, rounded corners, gradient header banner and gradient Save button matching the MENJ plugin suite design language.
+* Changed: Plugin header replaced with a gradient card (slate to teal) containing icon, title, subtitle and version badge.
+* Changed: Tab navigation now shows SVG icons alongside labels; active tab uses slate underline indicator.
+* Changed: Tab content area uses a light panel background to visually group settings cards.
+* Changed: Colour picker rows, inputs and code-copy buttons all updated to match the rounded, modernist aesthetic.
+
+= 2.1.6 =
+* Fixed: Gutenberg block rewritten to use InnerBlocks — the correct pattern for dynamic blocks. Content is no longer stored as a string attribute; it lives in inner block HTML and is passed to the PHP render callback as $content.
+* Fixed: save() function now returns InnerBlocks.Content instead of null, so inner blocks are correctly serialised into post content.
+* Fixed: content attribute removed from both PHP schema and JS attributes, eliminating the "Invalid parameter: attributes" REST API error.
+* Removed: wp-server-side-render script dependency (no longer needed).
+
+= 2.1.5 =
+* Fixed: Gutenberg block error "Invalid parameter: attributes" — full attribute schema now declared in register_block_type() so WordPress REST API can validate parameters correctly.
+* Fixed: ServerSideRender no longer receives the content (inner HTML) attribute, which caused REST validation failure on block preview.
+
+= 2.1.4 =
+* Changed: Font Family selector expanded from 3 to 6 options — Sans-Serif (Modernist), Serif (Traditional), Humanist Sans, Monospace, Slab Serif (Academic), System Default. All three locations (settings, customizer, helpers) updated consistently.
+
 = 2.1.3 =
-* Added: Usage tab in the plugin settings page. Covers shortcode reference with copyable examples, block editor guide, global vs per-instance settings explanation, style comparison, CSS class reference, and uninstall note.
+* Added: Usage tab in the plugin settings page with shortcode reference, copyable examples, block editor guide, style comparison, CSS class reference, and uninstall note.
+* Security: JSON-LD schema output now uses JSON_HEX_TAG and related flags to make script-tag injection structurally impossible.
+* Security: Shortcode inner content is now passed through wp_kses_post() to prevent markup injection on multi-author sites.
+* Security: Title tag attribute now escaped with tag_escape() for correct semantic validation.
+* Performance: Block editor script now loads in the footer instead of the document head.
 
 = 2.1.2 =
 * Changed: Normalised all line endings to LF across the entire plugin.

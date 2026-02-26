@@ -4,11 +4,64 @@ All notable changes to the Abstract Box plugin are documented in this file.
 
 ---
 
+## 2.1.7 — 2026-02-27
+
+### Changed
+
+- **Redesigned admin UI:** Card-based settings layout inspired by the MENJ plugin suite visual language. Each setting row is now a standalone rounded card (12px radius) with hover lift effect, matching the Auto Justify Content and Endmark design patterns.
+- **Plugin header card:** Gradient banner (slate `#1B3C53` → teal `#2E6A8E` → blue) with plugin icon, title, subtitle and version badge — replacing the plain WordPress `<h1>`.
+- **Tabbed navigation improved:** Icon + label tabs with a slate underline indicator for the active tab; icons sourced from inline SVG (no external requests).
+- **Tab content panel:** Light `#f1f5f9` background panel below the tabs unifies the form area visually.
+- **Gradient Save Settings button:** `linear-gradient(135deg, #1B3C53, #2E6A8E)` with drop shadow and smooth hover/focus states.
+- **Rounded input fields:** 8px border radius, focus ring uses teal accent `#2E6A8E`.
+- **Usage tab cards:** Each section is a white rounded card; code block copy buttons use gradient background; usage note callout uses gradient tint.
+- **Responsive layout:** Header collapses to column on narrow screens; style comparison grid goes single-column below 660px.
+
+---
+
+## 2.1.6 — 2026-02-27
+
+### Fixed
+
+- **Gutenberg block rewritten to use InnerBlocks (correct dynamic block architecture):** The previous implementation stored content as a `RichText` string attribute, which is non-standard for dynamic blocks and caused REST API validation errors. Content is now managed via `InnerBlocks`, the correct Gutenberg pattern. In the editor, authors add and edit blocks (paragraphs, lists, etc.) inside the Abstract Box. On the frontend, the rendered inner HTML is passed to the PHP `render_callback` as the `$content` parameter, exactly as WordPress intends.
+- **`save()` function corrected:** Previously returned `null` (dynamic block pattern), but with InnerBlocks the `save()` function must return `InnerBlocks.Content` so WordPress serialises the inner block grammar into the post content. This has been fixed.
+- **`content` removed from block attribute schema:** Content is no longer a string attribute in either the PHP `register_block_type()` schema or the JS `attributes` definition. This removes the source of the "Invalid parameter: attributes" REST error.
+- **Unused `wp-server-side-render` script dependency removed:** No longer needed since `ServerSideRender` has been replaced by the native `InnerBlocks` editor experience.
+
+---
+
+## 2.1.5 — 2026-02-27
+
+### Fixed
+
+- **Gutenberg block error "Invalid parameter: attributes":** `register_block_type()` was called without an `attributes` schema, so WordPress had no parameter definition to validate incoming REST API requests against. The full schema (title, subtitle, titleTag, bgColor, bgColorEnd, textColor, titleColor, accentColor, content) is now declared in PHP, matching the JS attribute definitions exactly.
+- **ServerSideRender content attribute:** The `content` attribute (inner RichText HTML) was incorrectly included in the attributes object passed to `ServerSideRender`. It is now excluded — a dedicated `previewAttributes` object containing only the eight named attributes is passed to the SSR component, preventing the REST validation failure on preview render.
+
+---
+
+## 2.1.4 — 2026-02-27
+
+### Changed
+
+- **Font Family options expanded:** The Font Family selector now offers six choices instead of three — Sans-Serif (Modernist), Serif (Traditional), Humanist Sans, Monospace, Slab Serif (Academic), and System Default. The valid-font allowlist and Customizer control have been updated consistently across all three locations (`helpers.php`, `settings.php`, `customizer.php`).
+
+---
+
 ## 2.1.3 — 2026-02-27
 
 ### Added
 
 - **Usage tab in settings:** A new Usage tab has been added to the plugin settings page. It covers: a three-step getting-started guide, full shortcode reference with all attributes and copyable examples, block editor walkthrough, explanation of global settings vs per-instance overrides, comparison of the Default and Academic box styles, CSS class reference for theme customisation, and an uninstall note. All code examples have one-click copy buttons.
+
+### Security
+
+- **JSON-LD hardening:** Schema output now encodes with `JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT`, making `</script>` breakout sequences structurally impossible regardless of string content in the schema payload.
+- **Shortcode content escaping:** Inner content of the `[abstract]` shortcode is now passed through `wp_kses_post()` after `do_shortcode()`, preventing unexpected markup injection on multi-author sites while preserving all standard post HTML including embeds.
+- **Title tag escaping:** The shortcode's `title_tag` attribute is now escaped with `tag_escape()` instead of `esc_html()`, which is semantically correct for HTML element names and provides an additional layer of validation on top of the allowlist check.
+
+### Performance
+
+- **Block editor script in footer:** The `abstract-box-block-editor` script is now registered with `in_footer = true`, deferring it to after page content and reducing render-blocking.
 
 ---
 
