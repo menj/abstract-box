@@ -1,165 +1,143 @@
-=== Custom Guest Authors ===
+=== Abstract Box ===
 Contributors: MENJ
 Donate link: https://paypal.me/menj
-Tags: guest author, multiple authors, author override, byline, custom fields
-Requires at least: 5.7
+Tags: abstract, shortcode, academic, schema, modernist
+Requires at least: 6.0
 Tested up to: 6.9
-Requires PHP: 8.2
-Stable tag: 2.1.0
+Requires PHP: 7.4
+Stable tag: 2.1.3
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Replace the default WordPress post author with custom guest author names via a custom field. Supports multiple comma-separated authors.
+Adds a chic and modernist "Abstract" section to posts via a shortcode [abstract], with schema.org JSON-LD structured data.
 
 == Description ==
 
-The Custom Guest Authors plugin (developed and maintained by [Mohd Elfie Nieshaem Juferi](https://ms.wikipedia.org/wiki/Mohd_Elfie_Nieshaem_Juferi)) allows you to set custom guest author names or multiple guest authors for posts using a custom field key named `guest-author`. For multiple authors, separate the names with commas. Ideal for sites with multiple contributors where separate WordPress user accounts are unnecessary.
+The Abstract Box plugin (developed and maintained by [Mohd Elfie Nieshaem Juferi](https://ms.wikipedia.org/wiki/Mohd_Elfie_Nieshaem_Juferi)) allows you to add a stylish, modern "Abstract" section to your WordPress posts using a simple shortcode. Ideal for academic papers, research summaries, or any content that benefits from a prominent callout.
 
-From version 1.6 onward, guest authors can be set directly from the post editor — no need to use the raw custom fields panel. A dedicated sidebar panel is available in both the classic editor and the block editor (Gutenberg).
+**Features:**
 
-This plugin was inspired by a tutorial from [WPBeginner](https://www.wpbeginner.com/wp-tutorials/how-to-rewrite-guest-author-name-with-custom-fields-in-wordpress/).
+* Clean, modernist design with configurable colours
+* Tabbed settings page (Appearance, Schema, Advanced)
+* Customizer integration with live colour preview
+* Schema.org JSON-LD structured data output
+* Choice of sans-serif, serif, or system font stacks
+* Default and custom style variants
+* Optional hover lift effect (desktop only)
+* Custom CSS class support
+* Full internationalisation (i18n) support
 
 == Installation ==
 
-1. Upload the `custom-guest-authors` directory to your `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Edit any post or page — a "Guest Authors" panel will appear in the sidebar.
+1. Upload the `abstract-box` folder to `/wp-content/plugins/`.
+2. Activate the plugin through the Plugins menu.
+3. Configure settings at Settings → Abstract Box.
+4. Use the `[abstract]` shortcode in your posts.
+
+== Usage ==
+
+= Basic =
+
+    [abstract]Your abstract content here.[/abstract]
+
+= With title =
+
+    [abstract title="Key Findings"]Your abstract content here.[/abstract]
+
+= With subtitle =
+
+    [abstract title="Abstract" subtitle="A brief summary"]Your content.[/abstract]
+
+= Custom Settings (Override Per-Box) =
+
+    [abstract title="Important" bg_color="#ffcccc" title_color="#cc0000" accent_color="#aa0000"]This abstract will be red regardless of your global settings.[/abstract]
 
 == Frequently Asked Questions ==
 
-= Can I use this for custom post types? =
+= Can I use my theme's styles instead? =
 
-Yes. Go to Settings › Guest Authors › General tab and check any public post types you want the override to apply to.
+Yes. Enable "Use Theme CSS" in the settings to prevent the plugin from loading its own stylesheet. The abstract box will use BEM classes (`abstract-box`, `abstract-box__title`, `abstract-box__subtitle`, `abstract-box__content`) that you can target in your theme.
 
-= How do I set custom guest authors for a post? =
+= What schema type should I use? =
 
-Edit a post — a "Guest Authors" panel appears in the right-hand sidebar of both the classic and block editors. Enter one name or multiple names separated by commas, e.g. "John Doe, Jane Smith".
-
-= Can I still use the raw custom field directly? =
-
-Yes. The field key is `guest-author`. Setting it via the custom fields panel or programmatically works as before.
-
-= I updated a guest author name but the old name is still showing. Why? =
-
-This was a bug in versions prior to 1.5 where the cached author name would persist for up to 12 hours. Version 1.5 fixed this — the cache is now invalidated immediately whenever a post is saved or its meta is updated.
-
-== Future Updates ==
-
-The following features are planned for future versions.
-
-= Suite Menu =
-All MENJ suite plugins (Auto Justify Content, Cite, Endmark, Custom Guest Authors) will be grouped under a shared "MENJ Plugins" top-level admin menu instead of individual Settings entries.
-
-= Guest Author Byline Card =
-A shortcode `[guest_author_card]` and optional auto-append toggle to render a styled byline card beneath post content, showing guest author name(s) and an optional per-post bio (stored as a second meta field `guest-author-bio`). Bio field will be available in both the classic editor meta box and the Gutenberg sidebar panel.
-
-= Guest Author Byline Block =
-A dedicated Gutenberg block (`custom-guest-authors/byline`) that renders the byline card inline in the editor with live preview via `useEntityProp`. Depends on the Byline Card feature.
-
-= Per-Post Author Link Override =
-An optional `guest-author-url` meta field per post to set a custom destination link for the author name (e.g. the guest's personal site or social profile), instead of always suppressing the link.
-
-= REST API Autocomplete Endpoint =
-A `GET /wp-json/cga/v1/authors` endpoint returning recently used guest author names, powering an autocomplete suggestions field in the Gutenberg sidebar.
-
-= Meta Key Migration Tool =
-A one-click tool on the Debug tab to migrate post meta from an existing custom field key into `guest-author`, with a dry-run count before committing. Useful when transitioning from another plugin or an ACF field with a different key name.
-
-= RSS Feed Toggle =
-A toggle on the Display tab to control whether the guest author override applies inside RSS/Atom feeds independently from on-site display.
+CreativeWork (the default) is recommended as it avoids conflicts with Article graphs generated by SEO plugins. Use ScholarlyArticle for academic content if your SEO plugin does not already output an Article graph.
 
 == Changelog ==
 
+= 2.1.3 =
+* Added: Usage tab in the plugin settings page. Covers shortcode reference with copyable examples, block editor guide, global vs per-instance settings explanation, style comparison, CSS class reference, and uninstall note.
+
+= 2.1.2 =
+* Changed: Normalised all line endings to LF across the entire plugin.
+* Changed: `Helpers::get_defaults()` now memoizes the defaults array using a static property — built once per request, reused on every call.
+* Changed: Extracted private `Assets::resolve_style()` helper to eliminate duplicated CSS file/handle resolution code in the two enqueue methods.
+* Changed: `render_preview()` no longer redundantly re-validates option values that were already sanitized on save.
+* Fixed: Gutenberg block now exposes all eight shortcode attributes. Previously `title_tag`, `bg_color_end`, `title_color`, and `accent_color` were missing from both the PHP block renderer and the JS inspector controls.
+
+= 2.1.1 =
+* Fixed: `$content` null default in `Shortcode::render()` caused `TypeError` on PHP 8+; changed to empty string with explicit cast.
+* Fixed: Tab navigation nonce removed; `$_GET['tab']` now validated against known tab slugs only. Nonces protect write operations, not read-only navigation.
+* Fixed: `enqueue_frontend()` moved to `wp_enqueue_scripts` hook (was called directly inside shortcode render, after `wp_head` had fired).
+* Fixed: Plugin URI and Author URI updated to publicly accessible GitHub URLs to satisfy WordPress.org review requirements.
+* Fixed: Inline CSS generation refactored to validate-not-escape pattern. New private `build_inline_css()` helper validates all option values before CSS interpolation; eliminates code duplication between frontend and block editor enqueue methods.
+* Fixed: JSON-LD output — removed `JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE` flags from `wp_json_encode()` to prevent `</script>` breakout sequences. Added encode failure guard.
+* Fixed: `render_preview()` double-encoding — premature `esc_attr()` on `$font_stack` removed; escaping now applied once at output only.
+* Fixed: Unescaped `echo` on tab active class in admin settings view; wrapped with `esc_attr()`.
+
 = 2.1.0 =
-* Changed: Settings page completely redesigned with a dark hero header (Endmark-style), underline tab navigation flush to the header, plain white card bodies with uppercase muted section labels (replacing gradient card headers), AJC-style toggle switch for schema suppression, AJC-style Save Settings button, and a MENJ footer link pointing to https://github.com/menj. Original colour palette retained throughout.
-
-= 2.0.9 =
-* Added: `CGA_NO_META` constant replaces the `'__cga_none__'` sentinel string literal that was repeated inline in three functions.
-* Added: `cga_get_authors()` shared helper encapsulates the full transient cache read/write path. Eliminates ~20 lines of duplicated cache logic previously copied across three functions.
-* Added: `cga_format_authors()` shared helper encapsulates the multi-author join pipeline. Eliminates the formatting block previously duplicated across two functions.
-* Fixed: `custom_guest_authors_name_meta()` (block theme path) did not respect the "Show Override On" setting. Per-post guest author names were appearing on archive pages even when set to Singular only. Both filter callbacks now apply an identical context gate.
-* Fixed: `custom_guest_authors_strip_link()` was calling `get_post_meta()` directly, bypassing the transient cache. Now uses `cga_get_authors()`.
-* Fixed: `useEntityProp` in `gutenberg-sidebar.js` used `postType || 'post'` as fallback on initial render. On Pages and custom post types this transiently read meta from the wrong entity. Changed to `postType || ''`.
-* Fixed: Version-based cache flush called `update_option()` after the `DELETE` query. A write failure would cause the flush to re-run on every request. Order reversed — version recorded first.
-* Fixed: Duplicate docblock before `cga_render_settings_page()` in `admin.php` removed.
-* Fixed: Debug tab transient display now shows a human-readable label instead of the raw `__cga_none__` sentinel string.
-
-= 2.0.8 =
-* Added: Live diagnostics panel on the Debug tab. Checks filter hook registration, guest-author meta presence, post type enablement, custom-fields support, and runs a filter simulation on a real post. Includes a manual post-ID tester.
-* Fixed: Root cause of author name never appearing on block themes (TT25, TT24, all FSE themes). `get_the_author_meta()` fires a dynamic filter — `get_the_author_{$field}` — so the correct hook name for display_name is `get_the_author_display_name`. The plugin had been registering a non-existent `get_the_author_meta` filter since v2.0.5; the callback was never called on any block theme frontend.
-* Fixed: Stale empty-string transient cache permanently blocking the default guest author. The cache sentinel is now `__cga_none__` so a cached "no meta" result no longer prevents the default from showing.
-* Fixed: Automatic cache flush on plugin update purges stale transients from older installs without requiring a manual Clear Cache.
-* Fixed: Default guest author not appearing on archive and listing pages. The `apply_on = "singular"` context gate was placed before the default author fallback and caused early exit on non-singular pages. The gate now only applies to per-post meta overrides.
-* Fixed: Filter hooks raised to priority 20 to run after `ent2ncr` (registered at priority 8 by another plugin on `the_author`).
-* Fixed: Post resolution hardened in all front-end filter functions using `get_post()` + `get_queried_object()` fallback, covering singular page templates before `setup_postdata()` runs, nested queries, and page-builder contexts.
+* Complete architectural refactor to pure Object-Oriented Programming (OOP) with PSR-4 namespacing.
+* Implemented Conditional Asset Loading: the CSS is now only loaded when the [abstract] shortcode is actually evaluated on-page, resulting in a cleaner global footprint and 100% PageSpeed score integrity.
+* Restructured plugin into an MVC-inspired directory mapping (views/, inc/).
+* Fixed `wp_kses_post` bug preventing inner nested blocks (like embeds) inside [abstract] output.
+* Fixed redundant enqueuing calls.
+* Security improvement: Late-escaped CSS properties dynamically pushed onto `--ab-*` classes as defense-in-depth against db injection.
+* Accessibility addition: Real-time WCAG color contrast calculator warning deployed to Admin Settings page to guarantee text legibility.
+* Outline hierarchy fix: Bypassed rigid `<h2>` tagging within abstract shells via new configurable `title_tag` logic (defaulting to semantic `<div class="abstract-box__title">`) guarding against A11y flow breakups.
+* Added Per-Instance overrides: Added ability to specify inline color hex codes right onto the actual shortcode allowing granular configuration per post.
+* Added Action links: Inserted a Settings hyperlink directly next to the Deactivate button on the core plugin activation screen.
+* Native Gutenberg Block: Introduced a fully WYSIWYG element into the editor environment natively built through Vanilla Editor JS. Includes Server-Side Rendering support out of the box.
+* Added Color Presets: Four one-click pre-configured color palettes provided natively within the admin appearance settings.
 
 = 2.0.4 =
-* Fixed: Guest author names saved via the Gutenberg sidebar panel were silently discarded. WordPress only writes post meta via the REST API for post types that declare `custom-fields` support. The plugin now calls `add_post_type_support()` for all enabled post types on `init`.
+* Added nonce verification to admin settings tab navigation, resolving Plugin Check NonceVerification.Recommended flag.
+
+= 2.0.3 =
+* Added nonce verification and capability checks for admin settings form handling.
 
 = 2.0.2 =
-* Changed: Plugin architecture refactored from a 1,175-line monolith. 901 lines of admin-only code were parsed on every front-end request. Code is now split into conditional includes: always-loaded front-end filters, cache, and meta registration; admin-only meta box and settings page.
-* Fixed: Author filter was returning `esc_html($name)` — HTML-escaped text — instead of a raw plain-text value. Author names containing `&`, `<`, `>`, or `"` displayed as literal HTML entities on screen.
-* Fixed: `Domain Path: /languages` added to plugin file header.
+* Removed deprecated manual translation loading for WP.org distribution.
 
 = 2.0.1 =
-* Fixed: Fatal PHP parse error on activation — plugin could not be activated at all.
-* Fixed: `load_plugin_textdomain()` was absent; bundled Malay translation never loaded.
-* Fixed: `$_GET['cga_action']` accessed without `wp_unslash()` or `sanitize_key()`.
-* Fixed: `Requires PHP` corrected from 8.5 to 8.2.
+* Escaped all preview output in admin settings to meet WP security standards.
 
 = 2.0.0 =
-* Improved: Settings UI completely redesigned with pill-style tab navigation, navy-to-teal gradient card headers, and stone accent divider.
-* Added: Debug tab — promoted from the Advanced tab, with System Information and Cache Status cards and a Clear Cache button.
-
-= 1.9.1 =
-* Added: `phpcs.xml` declaring authorised plugin prefixes; all `cga_*` functions annotated with inline `phpcs:ignore` for Plugin Check compatibility.
-* Updated: `Requires PHP` bumped to 8.2. `Tested up to` confirmed at 6.9.
-
-= 1.8.9 =
-* Fixed: Radio and checkbox cards showed no visual feedback on click; interactive state now updated via delegated JS listener.
-* Fixed: Join style preview was static; now updates live on radio card change.
-* Fixed: Active settings tab lost after save due to `wp_safe_redirect` bypassing the redirect filter. Callback now registered on both `wp_redirect` and `wp_safe_redirect`.
-* Fixed: `custom_guest_authors_suppress_url()` bypassed the transient cache, causing one extra DB query per post on archive pages. Now reads from the `cga_{post_id}` transient first.
-* Added: `js/settings.js` for interactive card state and live join-style preview.
-
-= 1.8.1 =
-* Fixed: Classic meta box hardcoded to `post` and `page`; now reads `cga_enabled_post_types`.
-* Fixed: `cga_suppress_schema` toggle not saving correctly for unchecked state.
-* Fixed: `cga_enabled_post_types` could not be saved as empty array.
-
-= 1.8.0 =
-* Added: Post type selection (checkbox grid replacing single "Override on Pages" toggle).
-* Added: Multi-Author Join Style — Natural, Comma, Ampersand.
-* Added: Show Override On — singular views only or all views.
-* Added: Configurable cache lifetime (1–168 hours, default 12).
-* Added: Suppress author from JSON-LD schema (Yoast SEO and Rank Math).
-* Added: Debug Information table on the Advanced tab.
-
-= 1.7.5 =
-* Added: Malay (Malaysia) translation (`ms_MY`). POT template file.
-* Removed: Author name prefix feature (produced doubled output with theme labels).
-* Fixed: Author name now output as plain unlinked text (guest authors have no author archive).
-
-= 1.7.2 =
-* Improved: Settings page redesigned to match plugin suite design language.
-
-= 1.7.1 =
-* Added: Settings page with General and Display tabs, default guest author, live preview.
-
-= 1.6.2 =
-* Fixed: Classic meta box appeared twice in block editor. Gutenberg JS crash on initial render. Deprecated `use_block_editor_for_post_type()` replaced.
-
-= 1.6 =
-* Added: Classic editor meta box and Gutenberg sidebar panel. REST API meta registration. CSS/JS assets separated into `/css/` and `/js/`.
-
-= 1.5 =
-* Fixed: Transient cache invalidated on post save and on programmatic meta updates.
-
-= 1.2 =
-* Added: Support for multiple comma-separated guest authors.
+* Complete plugin restructure with proper asset separation.
+* Added tabbed settings page (Appearance, Schema, Advanced).
+* Added configurable colour scheme with five colour pickers.
+* Added font family selection (sans-serif, serif, system).
+* Added border radius control.
+* Added schema type selector (CreativeWork, ScholarlyArticle, Article).
+* Added enable/disable toggle for JSON-LD output.
+* Added custom CSS class option.
+* Added hover effect toggle.
+* Added Customizer live preview for colours.
+* Added uninstall cleanup.
+* Added subtitle CSS styles.
+* Fixed: custom style now correctly applies via CSS class.
+* Fixed: sanitize_callback on style selector (was absint, now whitelist).
+* Fixed: double stylesheet enqueue resolved into single unified callback.
+* Fixed: content wrapper changed from <p> to <div> for valid HTML.
+* Wrapped hover effect in @media (hover: hover) for touch devices.
+* Added defined('ABSPATH') security guard.
+* Added version constant for cache-busting.
+* Added load_plugin_textdomain() for i18n.
+* Standardised all function prefixes to abstract_box_.
+* Removed ob_start/ob_end_clean.
+* Removed .phps file from distribution.
 
 = 1.1 =
-* Added: Transient caching, input sanitization, output escaping.
+* Added schema.org JSON-LD output.
+* Added Customizer style selector.
 
 = 1.0 =
 * Initial release.
