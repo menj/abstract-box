@@ -71,7 +71,7 @@ class Settings {
         $sanitized['border_radius'] = absint( $input['border_radius'] ?? $defaults['border_radius'] );
         $sanitized['border_radius'] = min( 50, max( 0, $sanitized['border_radius'] ) );
 
-        $valid_fonts                = array( 'sans-serif', 'serif', 'system' );
+        $valid_fonts                = array( 'sans-serif', 'serif', 'humanist', 'monospace', 'slab', 'system' );
         $sanitized['font_family']   = in_array( $input['font_family'] ?? '', $valid_fonts, true ) ? $input['font_family'] : $defaults['font_family'];
 
         $sanitized['enable_schema'] = ! empty( $input['enable_schema'] );
@@ -226,6 +226,9 @@ class Settings {
         <select name="abstract_box_options[font_family]" id="ab-font-family">
             <option value="sans-serif" <?php selected( $value, 'sans-serif' ); ?>><?php esc_html_e( 'Sans-Serif (Modernist)', 'abstract-box' ); ?></option>
             <option value="serif" <?php selected( $value, 'serif' ); ?>><?php esc_html_e( 'Serif (Traditional)', 'abstract-box' ); ?></option>
+            <option value="humanist" <?php selected( $value, 'humanist' ); ?>><?php esc_html_e( 'Humanist Sans', 'abstract-box' ); ?></option>
+            <option value="monospace" <?php selected( $value, 'monospace' ); ?>><?php esc_html_e( 'Monospace', 'abstract-box' ); ?></option>
+            <option value="slab" <?php selected( $value, 'slab' ); ?>><?php esc_html_e( 'Slab Serif (Academic)', 'abstract-box' ); ?></option>
             <option value="system" <?php selected( $value, 'system' ); ?>><?php esc_html_e( 'System Default', 'abstract-box' ); ?></option>
         </select>
         <?php

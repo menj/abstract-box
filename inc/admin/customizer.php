@@ -86,6 +86,9 @@ class Customizer {
             'choices'  => array(
                 'sans-serif' => __( 'Sans-Serif (Modernist)', 'abstract-box' ),
                 'serif'      => __( 'Serif (Traditional)', 'abstract-box' ),
+                'humanist'   => __( 'Humanist Sans', 'abstract-box' ),
+                'monospace'  => __( 'Monospace', 'abstract-box' ),
+                'slab'       => __( 'Slab Serif (Academic)', 'abstract-box' ),
                 'system'     => __( 'System Default', 'abstract-box' ),
             ),
         ) );
@@ -100,7 +103,7 @@ class Customizer {
     }
 
     public function sanitize_font_choice( $value ) {
-        return in_array( $value, array( 'sans-serif', 'serif', 'system' ), true ) ? $value : 'sans-serif';
+        return in_array( $value, array( 'sans-serif', 'serif', 'humanist', 'monospace', 'slab', 'system' ), true ) ? $value : 'sans-serif';
     }
 
     public function preview_js() {

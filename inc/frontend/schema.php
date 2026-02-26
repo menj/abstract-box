@@ -127,14 +127,16 @@ class Schema {
         
         $schema = apply_filters( 'abstract_box_schema_payload', $schema, $post, $attrs, $shortcode_content );
 
-        // wp_json_encode with no extra flags: forward slashes and unicode are safely
-        // escaped by default, preventing any </script> breakout sequences in the output.
-        $json = wp_json_encode( $schema );
+        // JSON_HEX_TAG encodes < and > as \u003C / \u003E, making </script> sequences
+        // impossible inside the JSON blob regardless of what string values are present.
+        // JSON_HEX_AMP, HEX_APOS, HEX_QUOT cover & ' " for belt-and-suspenders safety.
+        $json = wp_json_encode( $schema, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
         if ( false === $json ) {
             return;
         }
 
-        echo "\n<script type='application/ld+json'>" . $json . '</script>' . "\n";
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON encoded with HEX_TAG flags; script-tag breakout is not possible.
+        echo "\n<script type=\"application/ld+json\">" . $json . "</script>\n";
 
         $done = true;
     }

@@ -42,6 +42,9 @@ class Helpers {
         $stacks = array(
             'sans-serif' => "'Helvetica Neue', Helvetica, Arial, sans-serif",
             'serif'      => "Georgia, 'Times New Roman', Times, serif",
+            'humanist'   => "'Gill Sans', 'Gill Sans MT', Calibri, Optima, Candara, 'Segoe UI', sans-serif",
+            'monospace'  => "'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', 'Courier New', monospace",
+            'slab'       => "Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', Georgia, serif",
             'system'     => "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif",
         );
         return $stacks[ $key ] ?? $stacks['sans-serif'];

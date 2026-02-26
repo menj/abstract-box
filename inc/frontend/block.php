@@ -16,17 +16,31 @@ class Block {
         wp_register_script(
             'abstract-box-block-editor',
             ABSTRACT_BOX_URL . 'js/block-editor.js',
-            array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-server-side-render' ),
-            ABSTRACT_BOX_VERSION
+            array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components' ),
+            ABSTRACT_BOX_VERSION,
+            true
         );
 
         register_block_type( 'abstract-box/abstract', array(
             'editor_script'   => 'abstract-box-block-editor',
-            'render_callback' => [ $this, 'render_block' ]
+            'render_callback' => [ $this, 'render_block' ],
+            'attributes'      => array(
+                'title'       => array( 'type' => 'string',  'default' => 'Abstract' ),
+                'subtitle'    => array( 'type' => 'string',  'default' => '' ),
+                'titleTag'    => array( 'type' => 'string',  'default' => 'div' ),
+                'bgColor'     => array( 'type' => 'string',  'default' => '' ),
+                'bgColorEnd'  => array( 'type' => 'string',  'default' => '' ),
+                'textColor'   => array( 'type' => 'string',  'default' => '' ),
+                'titleColor'  => array( 'type' => 'string',  'default' => '' ),
+                'accentColor' => array( 'type' => 'string',  'default' => '' ),
+            ),
         ) );
     }
 
     public function render_block( $attributes, $content ) {
+        // $content is the rendered inner HTML from InnerBlocks — the correct
+        // channel for dynamic block content. We pass it directly to the
+        // shortcode renderer instead of reading from attributes.
         $atts = array(
             'title'        => isset( $attributes['title'] )       ? $attributes['title']       : 'Abstract',
             'subtitle'     => isset( $attributes['subtitle'] )    ? $attributes['subtitle']    : '',
@@ -38,8 +52,6 @@ class Block {
             'accent_color' => isset( $attributes['accentColor'] ) ? $attributes['accentColor'] : '',
         );
 
-        $inner_content = isset( $attributes['content'] ) ? $attributes['content'] : '';
-
-        return ( new Shortcode() )->render( $atts, $inner_content );
+        return ( new Shortcode() )->render( $atts, $content );
     }
 }
