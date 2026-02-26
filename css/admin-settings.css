@@ -1,0 +1,390 @@
+/**
+ * Abstract Box — Admin Settings Styles
+ *
+ * Clean, modernist admin interface consistent with
+ * the MENJ plugin suite design language.
+ *
+ * @package AbstractBox
+ * @since   2.0.0
+ */
+
+/* ── Page wrapper ──────────────────────────────────────────────────── */
+
+.abstract-box-settings {
+    max-width: 840px;
+}
+
+.abstract-box-settings h1 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #1e293b;
+    margin-bottom: 16px;
+}
+
+/* ── Tabs ──────────────────────────────────────────────────────────── */
+
+.abstract-box-tabs {
+    margin-bottom: 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.abstract-box-tabs .nav-tab {
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 10px 16px;
+    margin-bottom: -1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.abstract-box-tabs .nav-tab:hover,
+.abstract-box-tabs .nav-tab:focus {
+    background: transparent;
+    color: #1e293b;
+    border-bottom-color: #cbd5e1;
+}
+
+.abstract-box-tabs .nav-tab-active,
+.abstract-box-tabs .nav-tab-active:hover,
+.abstract-box-tabs .nav-tab-active:focus {
+    background: transparent;
+    color: #1e293b;
+    border-bottom-color: #3b82f6;
+}
+
+/* ── Form ──────────────────────────────────────────────────────────── */
+
+.abstract-box-form {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 24px 28px 16px;
+}
+
+.abstract-box-form .form-table {
+    margin-top: 0;
+}
+
+.abstract-box-form .form-table th {
+    font-weight: 500;
+    color: #334155;
+    padding: 16px 12px 16px 0;
+    font-size: 13px;
+    width: 180px;
+}
+
+.abstract-box-form .form-table td {
+    padding: 16px 0;
+}
+
+.abstract-box-form .form-table tr {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.abstract-box-form .form-table tr:last-child {
+    border-bottom: none;
+}
+
+.abstract-box-form select,
+.abstract-box-form input[type="text"],
+.abstract-box-form input[type="number"] {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: #1e293b;
+    transition: border-color 0.15s ease;
+}
+
+.abstract-box-form select:focus,
+.abstract-box-form input[type="text"]:focus,
+.abstract-box-form input[type="number"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
+    outline: none;
+}
+
+.abstract-box-form .description {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ── Colour Presets ────────────────────────────────────────────────── */
+
+.abstract-box-presets {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.abstract-box-preset-btn {
+    border-radius: 6px;
+    padding: 2px 12px;
+    font-size: 12px;
+}
+
+/* ── Submit button ─────────────────────────────────────────────────── */
+
+.abstract-box-form .submit .button-primary {
+    background: #1e293b;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: background 0.15s ease;
+}
+
+.abstract-box-form .submit .button-primary:hover,
+.abstract-box-form .submit .button-primary:focus {
+    background: #334155;
+}
+
+/* ── Preview panel ─────────────────────────────────────────────────── */
+
+.abstract-box-preview-panel {
+    margin-top: 24px;
+}
+
+.abstract-box-preview-panel h3 {
+    font-weight: 600;
+    font-size: 13px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+}
+
+.abstract-box-preview-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+}
+/* ── Usage tab ─────────────────────────────────────────────────────── */
+
+.abstract-box-usage {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px 32px;
+}
+
+.ab-usage-section {
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ab-usage-section--last {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.ab-usage-heading {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    padding: 0;
+    border: none;
+}
+
+.ab-usage-subheading {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin: 20px 0 10px;
+    padding: 0;
+    border: none;
+}
+
+.abstract-box-usage p {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.65;
+    margin: 0 0 10px;
+}
+
+.ab-usage-steps {
+    margin: 0 0 0 20px;
+    padding: 0;
+}
+
+.ab-usage-steps li {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.65;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+.ab-usage-list {
+    margin: 8px 0 8px 20px;
+    padding: 0;
+}
+
+.ab-usage-list li {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.65;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+/* ── Code blocks with copy button ──────────────────────────────────── */
+
+.ab-code-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin: 0 0 12px;
+}
+
+.ab-code-block code {
+    flex: 1;
+    font-size: 12px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    color: #1e293b;
+    background: transparent;
+    word-break: break-all;
+    line-height: 1.6;
+    padding: 0;
+}
+
+.ab-copy-btn {
+    flex-shrink: 0;
+    background: #1e293b;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    align-self: flex-start;
+    margin-top: 1px;
+}
+
+.ab-copy-btn:hover,
+.ab-copy-btn:focus {
+    background: #334155;
+    outline: none;
+}
+
+/* ── Attribute / class reference tables ────────────────────────────── */
+
+.ab-usage-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 0 0 12px;
+}
+
+.ab-usage-table thead tr {
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.ab-usage-table th {
+    text-align: left;
+    font-weight: 600;
+    color: #334155;
+    padding: 8px 12px 8px 0;
+    white-space: nowrap;
+}
+
+.ab-usage-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ab-usage-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.ab-usage-table td {
+    color: #475569;
+    padding: 10px 12px 10px 0;
+    vertical-align: top;
+    line-height: 1.55;
+}
+
+.ab-usage-table td code,
+.ab-usage-table th code {
+    background: #f1f5f9;
+    color: #1e293b;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 11.5px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    white-space: nowrap;
+}
+
+/* ── Style comparison cards ─────────────────────────────────────────── */
+
+.ab-style-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0 16px;
+}
+
+.ab-style-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 18px;
+}
+
+.ab-style-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 8px;
+    padding: 0;
+}
+
+.ab-style-card p {
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.ab-usage-note {
+    background: #f0f9ff;
+    border-left: 3px solid #3b82f6;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 12.5px !important;
+    color: #0369a1 !important;
+    margin-top: 4px !important;
+}
+
+@media (max-width: 600px) {
+    .ab-style-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .ab-code-block {
+        flex-direction: column;
+    }
+
+    .ab-copy-btn {
+        align-self: flex-start;
+    }
+}
