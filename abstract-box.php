@@ -3,7 +3,7 @@
  * Plugin Name: Abstract Box
  * Plugin URI:  https://github.com/menj/abstract-box
  * Description: Adds a chic and modernist "Abstract" section to posts via a shortcode [abstract], with schema.org JSON-LD structured data output.
- * Version:     2.1.7
+ * Version:     2.2.9
  * Author:      MENJ
  * Author URI:  https://github.com/menj
  * License:     GPLv2 or later
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 
 /* ── Constants ─────────────────────────────────────────────────────── */
 
-define( 'ABSTRACT_BOX_VERSION', '2.1.7' );
+define( 'ABSTRACT_BOX_VERSION', '2.2.9' );
 define( 'ABSTRACT_BOX_FILE',    __FILE__ );
 define( 'ABSTRACT_BOX_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'ABSTRACT_BOX_URL',     plugin_dir_url( __FILE__ ) );
@@ -27,7 +27,7 @@ define( 'ABSTRACT_BOX_URL',     plugin_dir_url( __FILE__ ) );
 
 spl_autoload_register( function ( $class ) {
     $prefix = 'Menj\\AbstractBox\\';
-    $base_dir = ABSTRACT_BOX_DIR . 'inc/';
+    $base_dir = ABSTRACT_BOX_DIR . 'includes/';
 
     $len = strlen( $prefix );
     if ( strncmp( $prefix, $class, $len ) !== 0 ) {

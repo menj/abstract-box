@@ -1,11 +1,11 @@
 === Abstract Box ===
-Contributors: MENJ
+Contributors: menj
 Donate link: https://paypal.me/menj
 Tags: abstract, shortcode, academic, schema, modernist
 Requires at least: 6.0
-Tested up to: 6.9
-Requires PHP: 7.4
-Stable tag: 2.1.7
+Tested up to: 6.9.1
+Requires PHP: 8.2
+Stable tag: 2.2.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,14 +17,18 @@ The Abstract Box plugin (developed and maintained by [Mohd Elfie Nieshaem Juferi
 
 **Features:**
 
-* Clean, modernist design with configurable colours
+* Seven distinct box styles: Modern, Academic, Minimal, Card, Ruled, Editorial, and Summary
+* Style-specific hover effects — each style responds in a way native to its character
+* Live admin preview — changes to style, colours, font, and border radius reflect instantly without saving
+* Fully configurable colour scheme with five pickers and eight one-click colour presets
+* Six font family options: Sans-Serif, Serif, Humanist Sans, Monospace, Slab Serif, System Default
 * Tabbed settings page (Appearance, Schema, Advanced)
 * Customizer integration with live colour preview
-* Schema.org JSON-LD structured data output
-* Choice of sans-serif, serif, or system font stacks
-* Default and custom style variants
-* Optional hover lift effect (desktop only)
-* Custom CSS class support
+* Schema.org JSON-LD structured data output (CreativeWork, ScholarlyArticle, or Article)
+* Per-instance colour and style overrides via shortcode attributes
+* Native Gutenberg block with inspector controls
+* Optional hover effect (desktop only, respects prefers-reduced-motion)
+* Custom CSS class support for theme-level targeting
 * Full internationalisation (i18n) support
 
 == Installation ==
@@ -64,104 +68,122 @@ CreativeWork (the default) is recommended as it avoids conflicts with Article gr
 
 == Changelog ==
 
+= 2.2.9 =
+* Added: Bullet Dots colour setting — independently configures the bullet and ol marker colour, falling back to Accent Colour if not set.
+* Added: Bulletin Stripe colour setting — independently configures the Bulletin style border and stripe colour, falling back to Accent Colour if not set.
+* Both settings appear in the Colours card on the Appearance tab and update the live preview immediately.
+
+= 2.2.8 =
+* Added: Bulletin box style (Style 8) — full accent-colour border with diagonal hazard-stripe on right and bottom edges via CSS repeating-linear-gradient.
+* Added: Bulletin available in shortcode (style="bulletin"), Gutenberg block inspector, and admin visual selector (8 columns).
+* Added: block-editor.css — list bullet and marker styles now render correctly inside the Gutenberg editor, matching frontend output.
+* Added: style attribute in Gutenberg block — per-block style override in the inspector, separate from the global setting.
+* Added: style attribute in shortcode — any style can now be set per-instance (e.g. style="bulletin"), overriding the global setting.
+* Changed: allowedBlocks on InnerBlocks restricted to paragraph, list, heading, quote, separator.
+
+= 2.2.7 =
+* Added: List styles inside box content — ul items use accent-coloured circular bullets, ol items use accent-coloured decimal markers. Nested lists supported. Theme CSS resets no longer affect list rendering.
+
+= 2.2.6 =
+* Changed: css/ and js/ moved to assets/css/ and assets/js/.
+* Changed: inc/ renamed to includes/ (WordPress Core convention).
+* Changed: views/ moved to includes/views/ (internal templates belong with internal code).
+* Changed: All path references updated throughout the plugin.
+* Added: upgrading.md — per-version upgrade notes and feature roadmap.
+
+= 2.2.5 =
+* Fixed: Preview panel now appears on the Appearance tab only; was incorrectly shown on Schema and Advanced tabs.
+
+= 2.2.4 =
+* Changed: Colours section — five individual picker cards replaced with one compact card; each picker is a label + swatch row.
+* Changed: Typography & Shape — Border Radius and Font Family combined into one compact two-row card.
+
+= 2.2.3 =
+* Fixed: Live preview was static (server-rendered from saved settings only). Now updates immediately on every change — Box Style, colours, font, border radius, and presets — without saving.
+* Fixed: Preview element now uses real .abstract-box CSS classes and CSS custom properties, identical to frontend output.
+* Changed: Frontend stylesheet enqueued on admin settings page; font stacks passed to JS via wp_localize_script.
+
+= 2.2.2 =
+* Changed: Hover effects redesigned — each style now has a character-appropriate effect rather than a generic lift.
+* Modern: deeper lift + gradient brightens. Academic: border solidifies to accent + faint tint. Minimal: upward glow from accent line. Card: lift + scale + deep shadow. Ruled: nudge right + left bar grows (no layout shift). Editorial: border activates to accent + ring. Summary: background brightens + tinted glow.
+* Changed: Base transition expanded to cover border-color, background-color, and filter.
+
+= 2.2.1 =
+* Added: Editorial style — solid full border, flat white background, no shadow (news pull-quote aesthetic).
+* Added: Summary style — soft tinted background, no border, generous rounded corners (AI summary aesthetic).
+* Changed: Admin visual selector expanded to all 7 styles with CSS mini-previews in a responsive 7-column grid.
+* Fixed: Font family allowlist omitted Humanist, Monospace, and Slab — selecting them silently fell back to Sans-Serif.
+
+= 2.2.0 =
+* Added: Five box styles — Modern, Academic, Minimal, Card, Ruled.
+* Added: Eight colour presets — Default, Dark, Sepia, Ocean, Forest, Rose, Midnight, Sand. Each preset also sets the recommended Box Style.
+* Added: CSS mini-preview thumbnails on each box style selector card.
+* Changed: Style options renamed Default/Custom → Modern/Academic; all styles consolidated into one CSS file.
+
+= 2.1.9 =
+* Changed: Getting Started and Box Style Reference moved from Usage tab to Appearance tab.
+* Changed: CSS Class Reference moved from Usage tab to Advanced tab.
+* Changed: Usage tab now contains only shortcode and block editor reference; copy trimmed throughout.
+
+= 2.1.8 =
+* Changed: Full admin UI rewrite for design_system v1.0.0 — all CSS scoped to plugin wrapper, 97 CSS custom properties, no :root declarations, no !important.
+* Changed: Settings rendered as card-based divs; form-table / do_settings_sections() removed.
+* Changed: Booleans now use CSS toggle switches; Box Style uses a visual card selector.
+* Fixed: SVG tab icons now sanitised via wp_kses() instead of echoed raw.
+* Added: Footer credit with GitHub link on all settings tabs.
+
 = 2.1.7 =
-* Changed: Redesigned admin UI with card-based layout, rounded corners, gradient header banner and gradient Save button matching the MENJ plugin suite design language.
-* Changed: Plugin header replaced with a gradient card (slate to teal) containing icon, title, subtitle and version badge.
-* Changed: Tab navigation now shows SVG icons alongside labels; active tab uses slate underline indicator.
-* Changed: Tab content area uses a light panel background to visually group settings cards.
-* Changed: Colour picker rows, inputs and code-copy buttons all updated to match the rounded, modernist aesthetic.
+* Changed: Admin UI redesigned — gradient header banner, card-based layout, SVG tab icons, gradient Save button, responsive layout. Matches MENJ plugin suite design language.
 
 = 2.1.6 =
-* Fixed: Gutenberg block rewritten to use InnerBlocks — the correct pattern for dynamic blocks. Content is no longer stored as a string attribute; it lives in inner block HTML and is passed to the PHP render callback as $content.
-* Fixed: save() function now returns InnerBlocks.Content instead of null, so inner blocks are correctly serialised into post content.
-* Fixed: content attribute removed from both PHP schema and JS attributes, eliminating the "Invalid parameter: attributes" REST API error.
-* Removed: wp-server-side-render script dependency (no longer needed).
+* Fixed: Gutenberg block rewritten to use InnerBlocks — correct pattern for dynamic blocks. Eliminates "Invalid parameter: attributes" REST API error.
+* Fixed: save() now returns InnerBlocks.Content; content attribute removed from schema.
 
 = 2.1.5 =
-* Fixed: Gutenberg block error "Invalid parameter: attributes" — full attribute schema now declared in register_block_type() so WordPress REST API can validate parameters correctly.
-* Fixed: ServerSideRender no longer receives the content (inner HTML) attribute, which caused REST validation failure on block preview.
+* Fixed: "Invalid parameter: attributes" block error — full attribute schema declared in register_block_type(). ServerSideRender no longer receives the content attribute.
 
 = 2.1.4 =
-* Changed: Font Family selector expanded from 3 to 6 options — Sans-Serif (Modernist), Serif (Traditional), Humanist Sans, Monospace, Slab Serif (Academic), System Default. All three locations (settings, customizer, helpers) updated consistently.
+* Changed: Font Family selector expanded from 3 to 6 options — Sans-Serif, Serif, Humanist Sans, Monospace, Slab Serif, System Default.
 
 = 2.1.3 =
-* Added: Usage tab in the plugin settings page with shortcode reference, copyable examples, block editor guide, style comparison, CSS class reference, and uninstall note.
-* Security: JSON-LD schema output now uses JSON_HEX_TAG and related flags to make script-tag injection structurally impossible.
-* Security: Shortcode inner content is now passed through wp_kses_post() to prevent markup injection on multi-author sites.
-* Security: Title tag attribute now escaped with tag_escape() for correct semantic validation.
-* Performance: Block editor script now loads in the footer instead of the document head.
+* Added: Usage tab with shortcode reference, block editor guide, copyable examples, style comparison, and CSS class reference.
+* Security: JSON-LD output hardened against script-tag injection. Shortcode content passed through wp_kses_post(). Title tag escaped with tag_escape().
+* Performance: Block editor script moved to footer.
 
 = 2.1.2 =
-* Changed: Normalised all line endings to LF across the entire plugin.
-* Changed: `Helpers::get_defaults()` now memoizes the defaults array using a static property — built once per request, reused on every call.
-* Changed: Extracted private `Assets::resolve_style()` helper to eliminate duplicated CSS file/handle resolution code in the two enqueue methods.
-* Changed: `render_preview()` no longer redundantly re-validates option values that were already sanitized on save.
-* Fixed: Gutenberg block now exposes all eight shortcode attributes. Previously `title_tag`, `bg_color_end`, `title_color`, and `accent_color` were missing from both the PHP block renderer and the JS inspector controls.
+* Changed: Line endings normalised to LF. get_defaults() memoized. resolve_style() helper extracted. render_preview() redundant re-validation removed.
+* Fixed: Gutenberg block now exposes all 8 shortcode attributes (title_tag, bg_color_end, title_color, accent_color were previously silently ignored).
 
 = 2.1.1 =
-* Fixed: `$content` null default in `Shortcode::render()` caused `TypeError` on PHP 8+; changed to empty string with explicit cast.
-* Fixed: Tab navigation nonce removed; `$_GET['tab']` now validated against known tab slugs only. Nonces protect write operations, not read-only navigation.
-* Fixed: `enqueue_frontend()` moved to `wp_enqueue_scripts` hook (was called directly inside shortcode render, after `wp_head` had fired).
-* Fixed: Plugin URI and Author URI updated to publicly accessible GitHub URLs to satisfy WordPress.org review requirements.
-* Fixed: Inline CSS generation refactored to validate-not-escape pattern. New private `build_inline_css()` helper validates all option values before CSS interpolation; eliminates code duplication between frontend and block editor enqueue methods.
-* Fixed: JSON-LD output — removed `JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE` flags from `wp_json_encode()` to prevent `</script>` breakout sequences. Added encode failure guard.
-* Fixed: `render_preview()` double-encoding — premature `esc_attr()` on `$font_stack` removed; escaping now applied once at output only.
-* Fixed: Unescaped `echo` on tab active class in admin settings view; wrapped with `esc_attr()`.
+* Fixed: PHP 8 TypeError in Shortcode::render() — $content default changed from null to empty string.
+* Fixed: Tab navigation nonce removed; $_GET['tab'] validated against known slugs only.
+* Fixed: enqueue_frontend() moved to wp_enqueue_scripts hook (was called after wp_head had fired).
+* Fixed: Plugin URI and Author URI updated to public GitHub URLs (WordPress.org requirement).
+* Fixed: Inline CSS validate-not-escape pattern; JSON-LD unescaped flags removed; double-encoding in render_preview() fixed.
 
 = 2.1.0 =
-* Complete architectural refactor to pure Object-Oriented Programming (OOP) with PSR-4 namespacing.
-* Implemented Conditional Asset Loading: the CSS is now only loaded when the [abstract] shortcode is actually evaluated on-page, resulting in a cleaner global footprint and 100% PageSpeed score integrity.
-* Restructured plugin into an MVC-inspired directory mapping (views/, inc/).
-* Fixed `wp_kses_post` bug preventing inner nested blocks (like embeds) inside [abstract] output.
-* Fixed redundant enqueuing calls.
-* Security improvement: Late-escaped CSS properties dynamically pushed onto `--ab-*` classes as defense-in-depth against db injection.
-* Accessibility addition: Real-time WCAG color contrast calculator warning deployed to Admin Settings page to guarantee text legibility.
-* Outline hierarchy fix: Bypassed rigid `<h2>` tagging within abstract shells via new configurable `title_tag` logic (defaulting to semantic `<div class="abstract-box__title">`) guarding against A11y flow breakups.
-* Added Per-Instance overrides: Added ability to specify inline color hex codes right onto the actual shortcode allowing granular configuration per post.
-* Added Action links: Inserted a Settings hyperlink directly next to the Deactivate button on the core plugin activation screen.
-* Native Gutenberg Block: Introduced a fully WYSIWYG element into the editor environment natively built through Vanilla Editor JS. Includes Server-Side Rendering support out of the box.
-* Added Color Presets: Four one-click pre-configured color palettes provided natively within the admin appearance settings.
+* Added: Conditional asset loading — frontend CSS only loads on pages using the shortcode.
+* Added: MVC directory structure (views/, inc/frontend/, inc/admin/).
+* Added: WCAG contrast checker in admin settings. Per-instance colour overrides via shortcode attributes. Settings link in plugins table. Native Gutenberg block with SSR. Four colour presets.
+* Changed: Full OOP rewrite with Menj\AbstractBox namespace. Configurable title_tag. BEM class naming. Settings migrated from theme_mod to get_option().
 
 = 2.0.4 =
-* Added nonce verification to admin settings tab navigation, resolving Plugin Check NonceVerification.Recommended flag.
+* Fixed: Nonce verification added to admin tab navigation (Plugin Check compliance).
 
 = 2.0.3 =
-* Added nonce verification and capability checks for admin settings form handling.
+* Fixed: phpcs:ignore annotation and wp_unslash() added to $_GET['tab'] read.
 
 = 2.0.2 =
-* Removed deprecated manual translation loading for WP.org distribution.
+* Removed: Manual load_plugin_textdomain() call (deprecated since WP 4.6).
 
 = 2.0.1 =
-* Escaped all preview output in admin settings to meet WP security standards.
+* Fixed: All dynamic output in admin preview properly escaped.
 
 = 2.0.0 =
-* Complete plugin restructure with proper asset separation.
-* Added tabbed settings page (Appearance, Schema, Advanced).
-* Added configurable colour scheme with five colour pickers.
-* Added font family selection (sans-serif, serif, system).
-* Added border radius control.
-* Added schema type selector (CreativeWork, ScholarlyArticle, Article).
-* Added enable/disable toggle for JSON-LD output.
-* Added custom CSS class option.
-* Added hover effect toggle.
-* Added Customizer live preview for colours.
-* Added uninstall cleanup.
-* Added subtitle CSS styles.
-* Fixed: custom style now correctly applies via CSS class.
-* Fixed: sanitize_callback on style selector (was absint, now whitelist).
-* Fixed: double stylesheet enqueue resolved into single unified callback.
-* Fixed: content wrapper changed from <p> to <div> for valid HTML.
-* Wrapped hover effect in @media (hover: hover) for touch devices.
-* Added defined('ABSPATH') security guard.
-* Added version constant for cache-busting.
-* Added load_plugin_textdomain() for i18n.
-* Standardised all function prefixes to abstract_box_.
-* Removed ob_start/ob_end_clean.
-* Removed .phps file from distribution.
+* Complete plugin restructure with OOP architecture, asset separation (css/, js/, inc/), tabbed settings page, five colour pickers with CSS custom properties, font family selector, border radius, schema type, hover toggle, Customizer live preview, and uninstall cleanup.
 
 = 1.1 =
-* Added schema.org JSON-LD output.
-* Added Customizer style selector.
+* Added: Schema.org JSON-LD output. Customizer style selector. apply_filters hooks.
 
 = 1.0 =
 * Initial release.
