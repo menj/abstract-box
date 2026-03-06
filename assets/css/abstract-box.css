@@ -1,0 +1,419 @@
+/**
+ * Abstract Box — Frontend Styles
+ *
+ * All five box styles in one file, driven by CSS custom properties
+ * injected by the plugin. Modifier classes select the active style.
+ *
+ * Styles:
+ *   (none)                   = modern  (default)
+ *   .abstract-box--academic  = Academic
+ *   .abstract-box--minimal   = Minimal
+ *   .abstract-box--card      = Card
+ *   .abstract-box--ruled     = Ruled
+ *
+ * @package AbstractBox
+ * @since   2.2.0
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE — shared across all styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box {
+    margin: 24px 0 16px;
+    position: relative;
+    font-family: var(--ab-font-family, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+    transition:
+        transform      0.22s ease,
+        box-shadow     0.22s ease,
+        border-color   0.18s ease,
+        border-width   0.18s ease,
+        background-color 0.18s ease,
+        filter         0.22s ease,
+        outline-color  0.18s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 1 — Modern (default, no modifier class)
+   Gradient background · left accent bar · soft shadow
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box:not([class*="abstract-box--"]),
+.abstract-box.abstract-box--modern {
+    padding: 16px 20px;
+    border-radius: var(--ab-border-radius, 8px);
+    border-left: 3px solid var(--ab-accent-color, #3b82f6);
+    background-color: var(--ab-bg-color, #f8fafc);
+    background-image: linear-gradient(
+        to right top,
+        var(--ab-bg-color, #f8fafc),
+        var(--ab-bg-color-end, #ffffff)
+    );
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+}
+
+@media (hover: hover) {
+    .abstract-box--hover:not([class*="abstract-box--"]):hover,
+    .abstract-box--hover.abstract-box--modern:hover {
+        transform: translateY(-4px);
+        box-shadow:
+            0 2px 4px  rgba(0, 0, 0, 0.04),
+            0 12px 28px rgba(0, 0, 0, 0.13);
+        filter: brightness(1.025);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 2 — Academic
+   Flat background · dotted border all sides · uppercase spaced title
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--academic {
+    padding: 20px 24px;
+    border-radius: var(--ab-border-radius, 0px);
+    border: 1px dotted var(--ab-accent-color, #64748b);
+    background-color: var(--ab-bg-color, #f8fafc);
+    background-image: none;
+    box-shadow: none;
+}
+
+@media (hover: hover) {
+    .abstract-box--hover.abstract-box--academic:hover {
+        border-color: var(--ab-accent-color, #64748b);
+        border-style: solid;
+        background-color: color-mix(in srgb, var(--ab-bg-color, #f8fafc) 97%, var(--ab-accent-color, #64748b) 3%);
+    }
+}
+
+.abstract-box--academic .abstract-box__title {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.9375rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 3 — Minimal
+   White · single top accent line · no shadow
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--minimal {
+    padding: 18px 22px;
+    border-radius: var(--ab-border-radius, 4px);
+    border-top: 2px solid var(--ab-accent-color, #3b82f6);
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    background-color: var(--ab-bg-color, #ffffff);
+    background-image: none;
+    box-shadow: none;
+}
+
+@media (hover: hover) {
+    .abstract-box--hover.abstract-box--minimal:hover {
+        background-color: color-mix(in srgb, var(--ab-bg-color, #ffffff) 95%, var(--ab-accent-color, #3b82f6) 5%);
+        box-shadow:
+            0 -3px 10px -2px color-mix(in srgb, var(--ab-accent-color, #3b82f6) 35%, transparent),
+            0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+}
+
+.abstract-box--minimal .abstract-box__title {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 4 — Card
+   Elevated white card · full border · strong rounded shadow
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--card {
+    padding: 22px 24px;
+    border-radius: calc(var(--ab-border-radius, 8px) + 4px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: var(--ab-bg-color, #ffffff);
+    background-image: none;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.06),
+        0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+@media (hover: hover) {
+    .abstract-box--hover.abstract-box--card:hover {
+        transform: translateY(-6px) scale(1.005);
+        box-shadow:
+            0 1px 2px  rgba(0, 0, 0, 0.04),
+            0 4px 8px  rgba(0, 0, 0, 0.06),
+            0 16px 40px rgba(0, 0, 0, 0.14);
+    }
+}
+
+.abstract-box--card .abstract-box__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 5 — Ruled
+   White · thick left bar · hairline rule under title
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--ruled {
+    padding: 18px 22px;
+    border-radius: var(--ab-border-radius, 4px);
+    border: none;
+    border-left: 5px solid var(--ab-accent-color, #3b82f6);
+    background-color: var(--ab-bg-color, #ffffff);
+    background-image: none;
+    box-shadow: none;
+}
+
+@media (hover: hover) {
+    .abstract-box--hover.abstract-box--ruled:hover {
+        transform: translateX(4px);
+        box-shadow: inset 7px 0 0 var(--ab-accent-color, #3b82f6);
+        filter: brightness(1.015);
+    }
+}
+
+.abstract-box--ruled .abstract-box__title {
+    font-weight: 700;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ab-accent-color, #3b82f6);
+    margin-bottom: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 6 — Editorial
+   Solid full border · flat background · no shadow
+   Inspired by news article pull-quote boxes.
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--editorial {
+    padding: 18px 22px;
+    border-radius: var(--ab-border-radius, 6px);
+    border: 1.5px solid var(--ab-accent-color, #94a3b8);
+    background-color: var(--ab-bg-color, #ffffff);
+    background-image: none;
+    box-shadow: none;
+}
+
+@media (hover: hover) {
+    .abstract-box--hover.abstract-box--editorial:hover {
+        border-color: var(--ab-accent-color, #3b82f6);
+        box-shadow: 0 0 0 1px var(--ab-accent-color, #3b82f6);
+    }
+}
+
+.abstract-box--editorial .abstract-box__title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 7 — Summary
+   Soft tinted background · no border · generous radius · no shadow
+   Inspired by AI summary / ringkasan boxes in news sites.
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--summary {
+    padding: 20px 24px;
+    border-radius: calc(var(--ab-border-radius, 8px) + 6px);
+    border: none;
+    background-color: var(--ab-bg-color, #f5f3ff);
+    background-image: none;
+    box-shadow: none;
+}
+
+@media (hover: hover) {
+    .abstract-box--hover.abstract-box--summary:hover {
+        background-color: color-mix(in srgb, var(--ab-bg-color, #f5f3ff) 90%, white 10%);
+        box-shadow:
+            0 0 0 4px color-mix(in srgb, var(--ab-bg-color, #f5f3ff) 60%, transparent),
+            0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+}
+
+.abstract-box--summary .abstract-box__title {
+    font-weight: 700;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLE 8 — Bulletin
+   White · full solid border · diagonal hazard-stripe on right + bottom
+   Inspired by news "What to know" bulletin boxes.
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box.abstract-box--bulletin {
+    background-color: var(--ab-bg-color, #ffffff);
+    border: 1.5px solid var(--ab-stripe-color, var(--ab-accent-color, #dc2626));
+    border-radius: var(--ab-border-radius, 4px);
+    box-shadow: none;
+    position: relative;
+    overflow: hidden;
+    padding-right: calc(var(--ab-bulletin-stripe, 20px) + 16px);
+    padding-bottom: calc(var(--ab-bulletin-stripe, 20px) + 14px);
+}
+
+/* Right-edge diagonal stripe */
+.abstract-box--bulletin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--ab-bulletin-stripe, 20px);
+    height: calc(100% - var(--ab-bulletin-stripe, 20px));
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    0px,
+        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    4px,
+        var(--ab-bg-color, #ffffff)         4px,
+        var(--ab-bg-color, #ffffff)         9px
+    );
+}
+
+/* Bottom-edge diagonal stripe (full width so corner is covered) */
+.abstract-box--bulletin::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--ab-bulletin-stripe, 20px);
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    0px,
+        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    4px,
+        var(--ab-bg-color, #ffffff)         4px,
+        var(--ab-bg-color, #ffffff)         9px
+    );
+}
+
+    @media (hover: hover) {
+        .abstract-box--hover.abstract-box--bulletin:hover {
+            border-color: var(--ab-stripe-color, var(--ab-accent-color, #dc2626));
+            box-shadow: 0 0 0 1px var(--ab-stripe-color, var(--ab-accent-color, #dc2626));
+        }
+    }
+
+.abstract-box--bulletin .abstract-box__title {
+    font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TITLE — shared base, overrides per style above
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 6px;
+    color: var(--ab-title-color, #1e293b);
+    letter-spacing: -0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SUBTITLE
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box__subtitle {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 10px;
+    color: var(--ab-accent-color, #3b82f6);
+    font-style: italic;
+}
+
+.abstract-box--academic .abstract-box__subtitle {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.875rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box__content {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--ab-text-color, #334155);
+    text-align: justify;
+}
+
+.abstract-box--academic .abstract-box__content {
+    line-height: 1.7;
+}
+
+.abstract-box__content p:last-child,
+.abstract-box__content li:last-child {
+    margin-bottom: 0;
+}
+
+/* ── List styles ───────────────────────────────────────────────────
+   Explicitly set list styles so theme resets cannot strip them.
+   Unordered lists use the accent colour for bullet markers.
+   ─────────────────────────────────────────────────────────────── */
+
+.abstract-box__content ul,
+.abstract-box__content ol {
+    margin: 0.5em 0 0.75em 0;
+    padding-left: 1.5em;
+    text-align: left;
+}
+
+.abstract-box__content ul {
+    list-style: none;
+    padding-left: 1.25em;
+}
+
+.abstract-box__content ul li {
+    position: relative;
+    padding-left: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.abstract-box__content ul li::before {
+    content: '';
+    position: absolute;
+    left: -1em;
+    top: 0.55em;
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background-color: var(--ab-bullet-color, var(--ab-accent-color, #3b82f6));
+    flex-shrink: 0;
+}
+
+.abstract-box__content ol {
+    list-style: decimal;
+}
+
+.abstract-box__content ol li {
+    margin-bottom: 0.5em;
+    padding-left: 0.25em;
+}
+
+.abstract-box__content ol li::marker {
+    color: var(--ab-bullet-color, var(--ab-accent-color, #3b82f6));
+    font-weight: 600;
+}
+
+/* Nested lists */
+.abstract-box__content ul ul,
+.abstract-box__content ol ol,
+.abstract-box__content ul ol,
+.abstract-box__content ol ul {
+    margin: 0.35em 0 0.35em 0;
+}
+
+.abstract-box__content ul ul li::before {
+    width: 0.35em;
+    height: 0.35em;
+    background-color: color-mix(in srgb, var(--ab-bullet-color, var(--ab-accent-color, #3b82f6)) 55%, transparent);
+}

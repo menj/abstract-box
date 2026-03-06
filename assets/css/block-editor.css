@@ -1,0 +1,58 @@
+/**
+ * Abstract Box — Block Editor Styles
+ *
+ * Scoped to .wp-block-abstract-box-abstract so rules only affect
+ * the abstract box block inside the Gutenberg editor.
+ *
+ * Mirrors the frontend list and bulletin styles so what authors see
+ * in the editor matches the rendered output.
+ *
+ * @package AbstractBox
+ * @since   2.2.8
+ */
+
+/* ── List styles (mirrors abstract-box.css .abstract-box__content) ── */
+
+.wp-block-abstract-box-abstract ul,
+.wp-block-abstract-box-abstract ol {
+    margin: 0.5em 0 0.75em 0;
+    padding-left: 1.5em;
+    text-align: left;
+}
+
+.wp-block-abstract-box-abstract ul {
+    list-style: none;
+    padding-left: 1.25em;
+}
+
+.wp-block-abstract-box-abstract ul li {
+    position: relative;
+    padding-left: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.wp-block-abstract-box-abstract ul li::before {
+    content: '';
+    position: absolute;
+    left: -1em;
+    top: 0.55em;
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background-color: var(--ab-bullet-color, var(--ab-accent-color, #3b82f6));
+    flex-shrink: 0;
+}
+
+.wp-block-abstract-box-abstract ol {
+    list-style: decimal;
+}
+
+.wp-block-abstract-box-abstract ol li {
+    margin-bottom: 0.5em;
+    padding-left: 0.25em;
+}
+
+.wp-block-abstract-box-abstract ol li::marker {
+    color: var(--ab-bullet-color, var(--ab-accent-color, #3b82f6));
+    font-weight: 600;
+}

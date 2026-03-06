@@ -1,0 +1,11 @@
+/**
+ * Abstract Box — Custom stylesheet (retired in 2.2.0)
+ *
+ * All styles are now consolidated in abstract-box.css.
+ * This file is kept to avoid 404 errors on sites that may have
+ * cached the old enqueue handle. It intentionally has no rules.
+ *
+ * @package AbstractBox
+ * @since   2.2.0
+ * @deprecated
+ */

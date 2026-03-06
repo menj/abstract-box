@@ -1,0 +1,1118 @@
+/**
+ * Abstract Box — Admin Settings Styles
+ *
+ * Scoped entirely to .abstract-box-settings.
+ * All colours use CSS custom properties defined on the wrapper —
+ * no :root declarations, no hardcoded hex outside the token block,
+ * no !important, no global element overrides.
+ *
+ * Conforms to design_system v1.0.0.
+ *
+ * @package AbstractBox
+ * @since   2.1.8
+ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — scoped to plugin wrapper only, never :root
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings {
+    /* Brand palette */
+    --ab-ui-navy:        #1B3C53;
+    --ab-ui-teal:        #2E6A8E;
+    --ab-ui-blue:        #3b82f6;
+    --ab-ui-stone:       #C8BAB0;
+
+    /* Semantic tokens — fall back to WP admin theme colour where useful */
+    --ab-ui-accent:      var(--ab-ui-teal);
+    --ab-ui-accent-dark: var(--ab-ui-navy);
+    --ab-ui-surface:     #ffffff;
+    --ab-ui-surface-2:   #f8fafc;
+    --ab-ui-surface-3:   #f1f5f9;
+    --ab-ui-border:      rgba(0, 0, 0, 0.08);
+    --ab-ui-border-med:  #e2e8f0;
+    --ab-ui-text-strong: #1e293b;
+    --ab-ui-text-base:   #334155;
+    --ab-ui-text-muted:  #64748b;
+    --ab-ui-text-subtle: #94a3b8;
+    --ab-ui-focus:       rgba(46, 106, 142, 0.20);
+
+    /* Sizing */
+    --ab-ui-radius-sm:   6px;
+    --ab-ui-radius-md:   10px;
+    --ab-ui-radius-lg:   14px;
+    --ab-ui-radius-xl:   16px;
+
+    max-width: 860px;
+    margin-top: 0;
+}
+
+/* Hide WP default h1 — replaced by header card */
+.abstract-box-settings > h1 {
+    display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HEADER CARD
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .ab-header {
+    background: linear-gradient(
+        135deg,
+        var(--ab-ui-navy)   0%,
+        var(--ab-ui-teal)  55%,
+        var(--ab-ui-blue) 100%
+    );
+    border-radius: var(--ab-ui-radius-xl);
+    padding: 28px 32px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.abstract-box-settings .ab-header__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.abstract-box-settings .ab-header__icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: var(--ab-ui-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.abstract-box-settings .ab-header__icon svg {
+    width: 26px;
+    height: 26px;
+    fill: #ffffff;
+}
+
+.abstract-box-settings .ab-header__title {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.abstract-box-settings .ab-header__subtitle {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 13px;
+    margin: 3px 0 0;
+}
+
+.abstract-box-settings .ab-header__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.abstract-box-settings .ab-header__version {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.90);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TAB NAVIGATION
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .abstract-box-tabs {
+    background: var(--ab-ui-surface);
+    border: none;
+    border-bottom: 1px solid var(--ab-ui-border-med);
+    margin: 0;
+    padding: 0 8px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.abstract-box-settings .abstract-box-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.abstract-box-settings .abstract-box-tabs .nav-tab {
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--ab-ui-text-muted);
+    font-weight: 500;
+    font-size: 13px;
+    padding: 13px 18px 11px;
+    margin-bottom: -1px;
+    margin-right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    box-shadow: none;
+}
+
+.abstract-box-settings .abstract-box-tabs .nav-tab svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    opacity: 0.65;
+    transition: opacity 0.15s ease;
+}
+
+.abstract-box-settings .abstract-box-tabs .nav-tab:hover,
+.abstract-box-settings .abstract-box-tabs .nav-tab:focus {
+    background: transparent;
+    color: var(--ab-ui-text-strong);
+    border-bottom-color: var(--ab-ui-border-med);
+    box-shadow: none;
+}
+
+.abstract-box-settings .abstract-box-tabs .nav-tab:hover svg,
+.abstract-box-settings .abstract-box-tabs .nav-tab:focus svg {
+    opacity: 1;
+}
+
+.abstract-box-settings .abstract-box-tabs .nav-tab-active,
+.abstract-box-settings .abstract-box-tabs .nav-tab-active:hover,
+.abstract-box-settings .abstract-box-tabs .nav-tab-active:focus {
+    background: transparent;
+    color: var(--ab-ui-accent-dark);
+    border-bottom-color: var(--ab-ui-accent);
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.abstract-box-settings .abstract-box-tabs .nav-tab-active svg {
+    opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TAB PANEL WRAPPER
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .ab-tab-panel {
+    background: var(--ab-ui-surface-3);
+    border-radius: 0 0 var(--ab-ui-radius-xl) var(--ab-ui-radius-xl);
+    padding: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SETTINGS FORM — div-card layout (no form-table dependency)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .abstract-box-form {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+/* Section label above a group of cards */
+.abstract-box-settings .ab-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ab-ui-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    margin: 20px 0 10px;
+    padding: 0;
+}
+
+.abstract-box-settings .ab-section-label:first-child {
+    margin-top: 0;
+}
+
+/* Individual setting card */
+.abstract-box-settings .ab-field-card {
+    background: var(--ab-ui-surface);
+    border: 1px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.abstract-box-settings .ab-field-card:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Info-only card — no interactive control, used for inline help sections */
+.abstract-box-settings .ab-info-card {
+    background: var(--ab-ui-surface);
+    border: 1px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 8px;
+}
+
+.abstract-box-settings .ab-info-card:last-of-type {
+    margin-bottom: 0;
+}
+
+/* ── Compact colour picker grid ────────────────────────────────── */
+
+.abstract-box-settings .ab-colour-grid {
+    padding: 4px 0;
+}
+
+.abstract-box-settings .ab-colour-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--ab-ui-border-light);
+}
+
+.abstract-box-settings .ab-colour-row:last-child {
+    border-bottom: none;
+}
+
+.abstract-box-settings .ab-colour-row__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ab-ui-text-base);
+    margin: 0;
+    cursor: default;
+}
+
+/* Keep the wp-color-picker widget tidy inside the row */
+.abstract-box-settings .ab-colour-row .wp-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.abstract-box-settings .ab-colour-row .wp-color-result {
+    width: 36px;
+    height: 26px;
+    border-radius: var(--ab-ui-radius-sm);
+    border: 1px solid var(--ab-ui-border-med);
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.abstract-box-settings .ab-colour-row .wp-color-result-text {
+    display: none;
+}
+
+/* ── Compact typography/shape grid ─────────────────────────────── */
+
+.abstract-box-settings .ab-typo-grid {
+    padding: 4px 0;
+}
+
+.abstract-box-settings .ab-typo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 20px;
+}
+
+.abstract-box-settings .ab-typo-row--bordered {
+    border-top: 1px solid var(--ab-ui-border-light);
+}
+
+.abstract-box-settings .ab-typo-row__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ab-ui-text-base);
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.abstract-box-settings .ab-typo-row__hint {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ab-ui-text-subtle);
+}
+
+.abstract-box-settings .ab-typo-row__control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.abstract-box-settings .ab-typo-row__control .small-text {
+    width: 56px;
+    text-align: center;
+}
+
+.abstract-box-settings .ab-typo-row__control select {
+    min-width: 180px;
+}
+
+.abstract-box-settings .ab-unit {
+    font-size: 12px;
+    color: var(--ab-ui-text-muted);
+}
+
+.abstract-box-settings .ab-info-card .ab-usage-steps {
+    margin: 0 0 0 18px;
+    padding: 0;
+}
+
+.abstract-box-settings .ab-info-card .ab-usage-steps li {
+    font-size: 13px;
+    color: var(--ab-ui-text-muted);
+    line-height: 1.65;
+    margin-bottom: 5px;
+    padding-left: 2px;
+}
+
+.abstract-box-settings .ab-info-card .ab-usage-steps li:last-child {
+    margin-bottom: 0;
+}
+
+.abstract-box-settings .ab-field-card:hover {
+    border-color: var(--ab-ui-teal);
+    box-shadow: 0 2px 10px rgba(27, 60, 83, 0.07);
+}
+
+/* Cards where the control stacks below the label (colour pickers, selects) */
+.abstract-box-settings .ab-field-card--stacked {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.abstract-box-settings .ab-field__meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.abstract-box-settings .ab-field__label {
+    font-weight: 600;
+    color: var(--ab-ui-text-strong);
+    font-size: 13.5px;
+    display: block;
+    margin: 0 0 2px;
+}
+
+.abstract-box-settings .ab-field__description {
+    color: var(--ab-ui-text-subtle);
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+    display: block;
+}
+
+.abstract-box-settings .ab-field__control {
+    flex-shrink: 0;
+}
+
+.abstract-box-settings .ab-field-card--stacked .ab-field__control {
+    width: 100%;
+}
+
+/* ── Toggle switch ─────────────────────────────────────────────── */
+
+.abstract-box-settings .ab-toggle {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.abstract-box-settings .ab-toggle input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.abstract-box-settings .ab-toggle__track {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 26px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.abstract-box-settings .ab-toggle__track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.20);
+    transition: transform 0.2s ease;
+}
+
+.abstract-box-settings .ab-toggle input:checked + .ab-toggle__track {
+    background: var(--ab-ui-accent);
+}
+
+.abstract-box-settings .ab-toggle input:checked + .ab-toggle__track::after {
+    transform: translateX(20px);
+}
+
+.abstract-box-settings .ab-toggle input:focus-visible + .ab-toggle__track {
+    outline: 2px solid var(--ab-ui-accent);
+    outline-offset: 2px;
+}
+
+/* ── Selects and text inputs ───────────────────────────────────── */
+
+.abstract-box-settings .ab-field-card select,
+.abstract-box-settings .ab-field-card input[type="text"],
+.abstract-box-settings .ab-field-card input[type="number"] {
+    border: 1.5px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-sm);
+    padding: 7px 11px;
+    font-size: 13px;
+    color: var(--ab-ui-text-strong);
+    background: var(--ab-ui-surface-2);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    max-width: 240px;
+    width: 100%;
+}
+
+.abstract-box-settings .ab-field-card select:focus,
+.abstract-box-settings .ab-field-card input[type="text"]:focus,
+.abstract-box-settings .ab-field-card input[type="number"]:focus {
+    border-color: var(--ab-ui-accent);
+    background: var(--ab-ui-surface);
+    box-shadow: 0 0 0 3px var(--ab-ui-focus);
+    outline: none;
+}
+
+/* ── Visual selector cards (Box Style) ────────────────────────── */
+
+.abstract-box-settings .ab-visual-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.abstract-box-settings .ab-visual-selector--5col {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.abstract-box-settings .ab-visual-selector--7col {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.abstract-box-settings .ab-visual-selector--8col {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+}
+
+.abstract-box-settings .ab-visual-option {
+    position: relative;
+}
+
+.abstract-box-settings .ab-visual-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.abstract-box-settings .ab-visual-option__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 10px 8px 12px;
+    border: 1.5px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-md);
+    background: var(--ab-ui-surface-2);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    text-align: center;
+}
+
+.abstract-box-settings .ab-visual-option__card:hover {
+    border-color: var(--ab-ui-accent);
+    background: var(--ab-ui-surface);
+}
+
+.abstract-box-settings .ab-visual-option input:checked + .ab-visual-option__card {
+    border-color: var(--ab-ui-accent);
+    background: var(--ab-ui-surface);
+    box-shadow: 0 0 0 3px var(--ab-ui-focus);
+}
+
+.abstract-box-settings .ab-visual-option input:focus-visible + .ab-visual-option__card {
+    outline: 2px solid var(--ab-ui-accent);
+    outline-offset: 2px;
+}
+
+.abstract-box-settings .ab-visual-option__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ab-ui-text-base);
+    line-height: 1.2;
+}
+
+.abstract-box-settings .ab-visual-option__sub {
+    font-size: 10px;
+    color: var(--ab-ui-text-subtle);
+    line-height: 1.3;
+}
+
+/* ── Style mini-previews ───────────────────────────────────────── */
+
+.abstract-box-settings .ab-style-preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    padding: 6px 8px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.abstract-box-settings .ab-style-preview__title {
+    display: block;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--ab-ui-text-base);
+    width: 55%;
+    opacity: 0.5;
+}
+
+.abstract-box-settings .ab-style-preview__line {
+    display: block;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ab-ui-text-subtle);
+    width: 90%;
+    opacity: 0.35;
+}
+
+.abstract-box-settings .ab-style-preview__line--short {
+    width: 70%;
+}
+
+/* Modern — gradient bg, left bar */
+.abstract-box-settings .ab-style-preview--modern {
+    background: linear-gradient(to right, #f0f4f8, #ffffff);
+    border-left: 3px solid var(--ab-ui-teal);
+}
+
+/* Academic — flat, dotted border */
+.abstract-box-settings .ab-style-preview--academic {
+    background: #fafaf9;
+    border: 1px dotted var(--ab-ui-text-subtle);
+}
+
+.abstract-box-settings .ab-style-preview--academic .ab-style-preview__title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 45%;
+}
+
+/* Minimal — white, top accent line */
+.abstract-box-settings .ab-style-preview--minimal {
+    background: #ffffff;
+    border-top: 2px solid var(--ab-ui-teal);
+}
+
+/* Card — white, shadow, rounded */
+.abstract-box-settings .ab-style-preview--card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Ruled — white, thick left bar, title hairline */
+.abstract-box-settings .ab-style-preview--ruled {
+    background: #ffffff;
+    border-left: 4px solid var(--ab-ui-navy);
+}
+
+.abstract-box-settings .ab-style-preview--ruled .ab-style-preview__title {
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    margin-bottom: 2px;
+}
+
+/* Editorial — flat white, solid full border */
+.abstract-box-settings .ab-style-preview--editorial {
+    background: #ffffff;
+    border: 1.5px solid var(--ab-ui-text-subtle);
+    border-radius: 4px;
+}
+
+/* Summary — soft tinted background, no border, generous radius */
+.abstract-box-settings .ab-style-preview--summary {
+    background: #ede9fe;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Bulletin — full red border + diagonal stripe on right + bottom */
+.abstract-box-settings .ab-style-preview--bulletin {
+    background: #ffffff;
+    border: 1.5px solid #dc2626;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+.abstract-box-settings .ab-style-preview--bulletin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7px;
+    height: calc(100% - 7px);
+    background: repeating-linear-gradient(
+        -45deg,
+        #dc2626 0px, #dc2626 2px,
+        #ffffff 2px, #ffffff 4px
+    );
+}
+.abstract-box-settings .ab-style-preview--bulletin::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #dc2626 0px, #dc2626 2px,
+        #ffffff 2px, #ffffff 4px
+    );
+}
+
+/* Active state — tint the preview frame */
+.abstract-box-settings .ab-visual-option input:checked + .ab-visual-option__card .ab-style-preview {
+    opacity: 1;
+}
+
+.abstract-box-settings .ab-visual-option input:checked + .ab-visual-option__card .ab-visual-option__label {
+    color: var(--ab-ui-navy);
+}
+
+/* ── Colour preset buttons ─────────────────────────────────────── */
+
+.abstract-box-settings .abstract-box-presets {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.abstract-box-settings .abstract-box-preset-btn {
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1.5px solid var(--ab-ui-border-med);
+    background: var(--ab-ui-surface);
+    color: var(--ab-ui-text-base);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    line-height: 1.4;
+    height: auto;
+}
+
+.abstract-box-settings .abstract-box-preset-btn:hover,
+.abstract-box-settings .abstract-box-preset-btn:focus {
+    border-color: var(--ab-ui-accent);
+    color: var(--ab-ui-accent-dark);
+    background: rgba(46, 106, 142, 0.06);
+    box-shadow: none;
+    outline: none;
+}
+
+/* ── Submit button ─────────────────────────────────────────────── */
+
+.abstract-box-settings .abstract-box-form .submit {
+    margin-top: 20px;
+    padding: 0;
+}
+
+.abstract-box-settings .abstract-box-form .submit .button-primary {
+    background: linear-gradient(135deg, var(--ab-ui-navy) 0%, var(--ab-ui-teal) 100%);
+    border: none;
+    border-radius: var(--ab-ui-radius-md);
+    padding: 10px 28px;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(27, 60, 83, 0.25);
+    transition: opacity 0.15s ease, box-shadow 0.15s ease;
+    height: auto;
+    line-height: 1.5;
+}
+
+.abstract-box-settings .abstract-box-form .submit .button-primary:hover {
+    background: linear-gradient(135deg, var(--ab-ui-navy) 0%, var(--ab-ui-teal) 100%);
+    opacity: 0.88;
+    box-shadow: 0 4px 14px rgba(27, 60, 83, 0.32);
+    color: #ffffff;
+    border: none;
+}
+
+.abstract-box-settings .abstract-box-form .submit .button-primary:focus-visible {
+    outline: 2px solid var(--ab-ui-accent);
+    outline-offset: 3px;
+    opacity: 0.88;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PREVIEW PANEL
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .abstract-box-preview-panel {
+    margin-top: 20px;
+}
+
+.abstract-box-settings .abstract-box-preview-panel h3 {
+    font-weight: 700;
+    font-size: 10px;
+    color: var(--ab-ui-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    margin: 0 0 10px;
+}
+
+.abstract-box-settings .abstract-box-preview-container {
+    background: var(--ab-ui-surface);
+    border: 1px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-lg);
+    padding: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   USAGE TAB
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .abstract-box-usage {
+    background: transparent;
+    padding: 0;
+}
+
+.abstract-box-settings .ab-usage-section {
+    background: var(--ab-ui-surface);
+    border: 1px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-lg);
+    padding: 22px 24px;
+    margin-bottom: 10px;
+}
+
+.abstract-box-settings .ab-usage-section:last-child {
+    margin-bottom: 0;
+}
+
+.abstract-box-settings .ab-usage-heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ab-ui-text-strong);
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    padding: 0;
+    border: none;
+}
+
+.abstract-box-settings .ab-usage-subheading {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ab-ui-text-base);
+    margin: 20px 0 10px;
+    padding: 0;
+    border: none;
+}
+
+.abstract-box-settings .abstract-box-usage p {
+    font-size: 13px;
+    color: var(--ab-ui-text-muted);
+    line-height: 1.65;
+    margin: 0 0 10px;
+}
+
+.abstract-box-settings .ab-usage-steps,
+.abstract-box-settings .ab-usage-list {
+    margin: 8px 0 8px 20px;
+    padding: 0;
+}
+
+.abstract-box-settings .ab-usage-steps li,
+.abstract-box-settings .ab-usage-list li {
+    font-size: 13px;
+    color: var(--ab-ui-text-muted);
+    line-height: 1.65;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+.abstract-box-settings .ab-code-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--ab-ui-surface-2);
+    border: 1px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-md);
+    padding: 12px 14px;
+    margin: 0 0 12px;
+}
+
+.abstract-box-settings .ab-code-block code {
+    flex: 1;
+    font-size: 12px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    color: var(--ab-ui-text-strong);
+    background: transparent;
+    word-break: break-all;
+    line-height: 1.6;
+    padding: 0;
+}
+
+.abstract-box-settings .ab-copy-btn {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--ab-ui-navy), var(--ab-ui-teal));
+    color: #ffffff;
+    border: none;
+    border-radius: var(--ab-ui-radius-sm);
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+    align-self: flex-start;
+}
+
+.abstract-box-settings .ab-copy-btn:hover,
+.abstract-box-settings .ab-copy-btn:focus {
+    opacity: 0.82;
+    outline: none;
+}
+
+.abstract-box-settings .ab-usage-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 0 0 12px;
+}
+
+.abstract-box-settings .ab-usage-table thead tr {
+    border-bottom: 2px solid var(--ab-ui-border-med);
+}
+
+.abstract-box-settings .ab-usage-table th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--ab-ui-text-base);
+    padding: 8px 12px 8px 0;
+    white-space: nowrap;
+}
+
+.abstract-box-settings .ab-usage-table tbody tr {
+    border-bottom: 1px solid var(--ab-ui-surface-3);
+}
+
+.abstract-box-settings .ab-usage-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.abstract-box-settings .ab-usage-table td {
+    color: var(--ab-ui-text-muted);
+    padding: 10px 12px 10px 0;
+    vertical-align: top;
+    line-height: 1.55;
+}
+
+.abstract-box-settings .ab-usage-table td code,
+.abstract-box-settings .ab-usage-table th code {
+    background: var(--ab-ui-surface-3);
+    color: var(--ab-ui-navy);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11.5px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    white-space: nowrap;
+}
+
+.abstract-box-settings .ab-style-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0 16px;
+}
+
+.abstract-box-settings .ab-style-comparison--3col {
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+}
+
+.abstract-box-settings .ab-style-card {
+    background: var(--ab-ui-surface-2);
+    border: 1.5px solid var(--ab-ui-border-med);
+    border-radius: var(--ab-ui-radius-md);
+    padding: 16px 18px;
+    transition: border-color 0.15s ease;
+}
+
+.abstract-box-settings .ab-style-card:hover {
+    border-color: var(--ab-ui-accent);
+}
+
+.abstract-box-settings .ab-style-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ab-ui-text-strong);
+    margin: 0 0 6px;
+    padding: 0;
+}
+
+.abstract-box-settings .ab-style-card p {
+    font-size: 12.5px;
+    color: var(--ab-ui-text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.abstract-box-settings .ab-usage-note {
+    background: linear-gradient(135deg, rgba(46, 106, 142, 0.06), rgba(27, 60, 83, 0.04));
+    border-left: 3px solid var(--ab-ui-accent);
+    border-radius: 0 var(--ab-ui-radius-sm) var(--ab-ui-radius-sm) 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--ab-ui-navy);
+    margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════ */
+
+.abstract-box-settings .ab-footer {
+    border-top: 1px solid var(--ab-ui-border-med);
+    margin-top: 28px;
+    padding-top: 16px;
+    text-align: center;
+}
+
+.abstract-box-settings .ab-footer p {
+    font-size: 12px;
+    color: var(--ab-ui-text-subtle);
+    margin: 0;
+}
+
+.abstract-box-settings .ab-footer a {
+    color: var(--ab-ui-accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.abstract-box-settings .ab-footer a:hover,
+.abstract-box-settings .ab-footer a:focus {
+    color: var(--ab-ui-navy);
+    text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE — 782px matches WP admin breakpoint
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 980px) {
+    .abstract-box-settings .ab-visual-selector--7col,
+    .abstract-box-settings .ab-visual-selector--8col {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 782px) {
+    .abstract-box-settings .ab-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        border-radius: var(--ab-ui-radius-lg);
+    }
+
+    .abstract-box-settings .ab-visual-selector--5col,
+    .abstract-box-settings .ab-visual-selector--7col,
+    .abstract-box-settings .ab-visual-selector--8col {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .abstract-box-settings .ab-tab-panel {
+        padding: 16px;
+    }
+
+    .abstract-box-settings .ab-field-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .abstract-box-settings .ab-field-card .ab-toggle {
+        align-self: flex-start;
+    }
+
+    .abstract-box-settings .ab-field-card select,
+    .abstract-box-settings .ab-field-card input[type="text"],
+    .abstract-box-settings .ab-field-card input[type="number"] {
+        max-width: 100%;
+    }
+
+    .abstract-box-settings .ab-visual-selector {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .abstract-box-settings .ab-style-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .abstract-box-settings .ab-style-comparison--3col {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .abstract-box-settings .ab-code-block {
+        flex-direction: column;
+    }
+
+    .abstract-box-settings .ab-copy-btn {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .abstract-box-settings .ab-visual-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .abstract-box-settings .ab-visual-selector--5col {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
