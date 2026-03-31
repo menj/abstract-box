@@ -62,6 +62,10 @@ class Shortcode {
             $classes[] = 'abstract-box--hover';
         }
 
+        if ( 'compact' === ( $options['box_width'] ?? 'full' ) ) {
+            $classes[] = 'abstract-box--compact';
+        }
+
         if ( ! empty( $options['custom_css_class'] ) ) {
             $classes[] = sanitize_html_class( $options['custom_css_class'] );
         }

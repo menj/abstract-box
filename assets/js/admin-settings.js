@@ -22,6 +22,7 @@
         'abstract-box--ruled',
         'abstract-box--editorial',
         'abstract-box--summary',
+        'abstract-box--bulletin',
     ];
 
     var FONT_STACKS = (window.abstractBoxAdmin && window.abstractBoxAdmin.fontStacks)
@@ -105,17 +106,11 @@
         if (accentColor) { $preview[0].style.setProperty('--ab-accent-color', accentColor); }
 
         var bulletColor = $wrapper.find('input[name="abstract_box_options[bullet_color]"]').val() || '';
-        var stripeColor = $wrapper.find('input[name="abstract_box_options[stripe_color]"]').val() || '';
 
         if (bulletColor) {
             $preview[0].style.setProperty('--ab-bullet-color', bulletColor);
         } else {
             $preview[0].style.removeProperty('--ab-bullet-color');
-        }
-        if (stripeColor) {
-            $preview[0].style.setProperty('--ab-stripe-color', stripeColor);
-        } else {
-            $preview[0].style.removeProperty('--ab-stripe-color');
         }
         if (titleColor)  { $preview[0].style.setProperty('--ab-title-color',  titleColor);  }
         if (textColor)   { $preview[0].style.setProperty('--ab-text-color',   textColor);   }
@@ -130,6 +125,14 @@
         var fontKey   = $wrapper.find('select[name="abstract_box_options[font_family]"]').val() || 'sans-serif';
         var fontStack = FONT_STACKS[fontKey] || FONT_STACKS['sans-serif'];
         $preview[0].style.setProperty('--ab-font-family', fontStack);
+
+        /* Box width */
+        var boxWidth = $wrapper.find('input[name="abstract_box_options[box_width]"]:checked').val() || 'full';
+        if (boxWidth === 'compact') {
+            $preview.addClass('abstract-box--compact');
+        } else {
+            $preview.removeClass('abstract-box--compact');
+        }
     }
 
     /* ── Colour presets ───────────────────────────────────────────── */
@@ -198,6 +201,30 @@
             title_color:  '#713f12',
             accent_color: '#d97706',
             style:        'academic'
+        },
+        bulletin: {
+            bg_color:     '#ffffff',
+            bg_color_end: '#ffffff',
+            text_color:   '#1a1a1a',
+            title_color:  '#1a1a1a',
+            accent_color: '#dc2626',
+            style:        'bulletin'
+        },
+        editorial: {
+            bg_color:     '#ffffff',
+            bg_color_end: '#ffffff',
+            text_color:   '#1e293b',
+            title_color:  '#0f172a',
+            accent_color: '#475569',
+            style:        'editorial'
+        },
+        summary: {
+            bg_color:     '#f5f3ff',
+            bg_color_end: '#ede9fe',
+            text_color:   '#4c1d95',
+            title_color:  '#3b0764',
+            accent_color: '#7c3aed',
+            style:        'summary'
         }
     };
 
@@ -235,6 +262,11 @@
 
         /* Border radius input */
         $wrapper.on('input change', 'input[name="abstract_box_options[border_radius]"]', function () {
+            updatePreview($wrapper);
+        });
+
+        /* Box width radios */
+        $wrapper.on('change', 'input[name="abstract_box_options[box_width]"]', function () {
             updatePreview($wrapper);
         });
 

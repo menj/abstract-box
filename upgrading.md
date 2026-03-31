@@ -52,7 +52,7 @@ Planned features and suggestions recorded here for future development. Items are
 > **Implemented in 2.2.8:** Bulletin style, per-instance `style` attribute on shortcode and block, Gutenberg block list support with `block-editor.css`.
 
 
-- **RTL support** — verify all seven styles render correctly under `direction: rtl`; adjust border placement for Ruled and Editorial styles where the left-side accent needs to mirror to the right.
+- **RTL support** — verify all eight styles render correctly under `direction: rtl`; adjust border placement for Ruled and Editorial styles where the left-side accent needs to mirror to the right.
 - **Dark mode variant** — `@media (prefers-color-scheme: dark)` overrides for each style so boxes adapt automatically to OS-level dark mode without requiring a separate preset.
 - **Additional box styles** — candidate styles noted during development:
   - *Timeline* — vertical left-border with date stamp, suitable for historical or chronological abstracts
@@ -65,7 +65,9 @@ Planned features and suggestions recorded here for future development. Items are
 
 ### Colour & Typography
 
-- **Per-style colour overrides** — currently all styles share the same five colour values. Allow each style to have its own saved palette so switching styles also switches the colour scheme cleanly.
+> **Implemented in 2.2.9:** Bullet Dots colour picker (`bullet_color`) — independent control for `ul`/`ol` marker colour, falling back to accent colour.
+
+- **Per-style colour overrides** — currently all styles share the same six colour values. Allow each style to have its own saved palette so switching styles also switches the colour scheme cleanly.
 - **Google Fonts integration** — optional enqueue of a selected Google Font as the font family, with a font selector that previews the typeface name in its own face.
 - **CSS custom property export** — a read-only field in the Advanced tab showing the generated `--ab-*` variable block, so developers can copy it into their theme for use outside the shortcode.
 
@@ -81,6 +83,8 @@ Planned features and suggestions recorded here for future development. Items are
 ---
 
 ### Admin & Settings
+
+> **Implemented in 2.3.3:** Box Width setting (Full / Compact) added to Typography & Shape on the Appearance tab.
 
 - **Import / export settings** — JSON export of the full `abstract_box_options` array, and a corresponding import field, so settings can be moved between sites without manual re-entry.
 - **Reset to defaults button** — a single-click reset on the Appearance tab, distinct from saving, that restores all values to the plugin defaults without requiring a save.
@@ -99,7 +103,8 @@ Planned features and suggestions recorded here for future development. Items are
 
 ### Developer & Architecture
 
-- **Dedicated `languages/` directory** — generate a `.pot` template file and add it to the repository so translators have a starting point without needing to run `wp i18n make-pot` manually.
+> **Implemented in 2.3.0:** `languages/` directory included in plugin package; `load_plugin_textdomain()` removed (auto-loaded since WP 4.6).
+
 - **Plugin Check (PCP) CI** — add a GitHub Actions workflow that runs `plugin-check` on every push so regressions against WordPress.org guidelines are caught before submission.
 - **Unit tests** — PHPUnit tests for `Helpers::get_options()`, `Helpers::font_stack()`, `Assets::build_inline_css()`, and `Shortcode::render()` as a minimum viable test suite.
 - **`abstract-box-custom.css` removal** — the file is empty and retained only as a legacy stub. Remove in the next major version (3.0.0) with a note in upgrade documentation.

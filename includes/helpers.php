@@ -18,13 +18,13 @@ class Helpers {
                 'bg_color_end'     => '#ffffff',
                 'accent_color'     => '#3b82f6',
                 'bullet_color'     => '',
-                'stripe_color'     => '',
                 'border_radius'    => 8,
                 'font_family'      => 'sans-serif',
                 'enable_schema'    => true,
                 'schema_type'      => 'CreativeWork',
                 'custom_css_class' => '',
                 'hover_effect'     => true,
+                'box_width'        => 'full',
             );
         }
         return self::$defaults;

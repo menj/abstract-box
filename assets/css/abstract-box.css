@@ -23,6 +23,8 @@
     margin: 24px 0 16px;
     position: relative;
     font-family: var(--ab-font-family, 'Helvetica Neue', Helvetica, Arial, sans-serif);
+    --ab-pad-v: 20px;
+    --ab-pad-h: 24px;
     transition:
         transform      0.22s ease,
         box-shadow     0.22s ease,
@@ -40,7 +42,7 @@
 
 .abstract-box:not([class*="abstract-box--"]),
 .abstract-box.abstract-box--modern {
-    padding: 16px 20px;
+    padding: var(--ab-pad-v) var(--ab-pad-h);
     border-radius: var(--ab-border-radius, 8px);
     border-left: 3px solid var(--ab-accent-color, #3b82f6);
     background-color: var(--ab-bg-color, #f8fafc);
@@ -69,7 +71,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .abstract-box.abstract-box--academic {
-    padding: 20px 24px;
+    padding: var(--ab-pad-v) var(--ab-pad-h);
     border-radius: var(--ab-border-radius, 0px);
     border: 1px dotted var(--ab-accent-color, #64748b);
     background-color: var(--ab-bg-color, #f8fafc);
@@ -97,7 +99,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .abstract-box.abstract-box--minimal {
-    padding: 18px 22px;
+    padding: var(--ab-pad-v) var(--ab-pad-h);
     border-radius: var(--ab-border-radius, 4px);
     border-top: 2px solid var(--ab-accent-color, #3b82f6);
     border-right: none;
@@ -129,7 +131,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .abstract-box.abstract-box--card {
-    padding: 22px 24px;
+    padding: calc(var(--ab-pad-v) + 4px) calc(var(--ab-pad-h) + 4px);
     border-radius: calc(var(--ab-border-radius, 8px) + 4px);
     border: 1px solid rgba(0, 0, 0, 0.08);
     background-color: var(--ab-bg-color, #ffffff);
@@ -160,7 +162,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .abstract-box.abstract-box--ruled {
-    padding: 18px 22px;
+    padding: var(--ab-pad-v) var(--ab-pad-h);
     border-radius: var(--ab-border-radius, 4px);
     border: none;
     border-left: 5px solid var(--ab-accent-color, #3b82f6);
@@ -191,7 +193,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .abstract-box.abstract-box--editorial {
-    padding: 18px 22px;
+    padding: var(--ab-pad-v) var(--ab-pad-h);
     border-radius: var(--ab-border-radius, 6px);
     border: 1.5px solid var(--ab-accent-color, #94a3b8);
     background-color: var(--ab-bg-color, #ffffff);
@@ -218,7 +220,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .abstract-box.abstract-box--summary {
-    padding: 20px 24px;
+    padding: calc(var(--ab-pad-v) + 2px) calc(var(--ab-pad-h) + 2px);
     border-radius: calc(var(--ab-border-radius, 8px) + 6px);
     border: none;
     background-color: var(--ab-bg-color, #f5f3ff);
@@ -249,13 +251,15 @@
 
 .abstract-box.abstract-box--bulletin {
     background-color: var(--ab-bg-color, #ffffff);
-    border: 1.5px solid var(--ab-stripe-color, var(--ab-accent-color, #dc2626));
+    border: 1.5px solid var(--ab-accent-color, #dc2626);
     border-radius: var(--ab-border-radius, 4px);
     box-shadow: none;
     position: relative;
     overflow: hidden;
-    padding-right: calc(var(--ab-bulletin-stripe, 20px) + 16px);
-    padding-bottom: calc(var(--ab-bulletin-stripe, 20px) + 14px);
+    padding: var(--ab-pad-v)
+             calc(var(--ab-bulletin-stripe, 20px) + var(--ab-pad-h))
+             calc(var(--ab-bulletin-stripe, 20px) + var(--ab-pad-v))
+             var(--ab-pad-h);
 }
 
 /* Right-edge diagonal stripe */
@@ -268,8 +272,8 @@
     height: calc(100% - var(--ab-bulletin-stripe, 20px));
     background: repeating-linear-gradient(
         -45deg,
-        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    0px,
-        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    4px,
+        var(--ab-accent-color, #dc2626)    0px,
+        var(--ab-accent-color, #dc2626)    4px,
         var(--ab-bg-color, #ffffff)         4px,
         var(--ab-bg-color, #ffffff)         9px
     );
@@ -285,8 +289,8 @@
     height: var(--ab-bulletin-stripe, 20px);
     background: repeating-linear-gradient(
         -45deg,
-        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    0px,
-        var(--ab-stripe-color, var(--ab-accent-color, #dc2626))    4px,
+        var(--ab-accent-color, #dc2626)    0px,
+        var(--ab-accent-color, #dc2626)    4px,
         var(--ab-bg-color, #ffffff)         4px,
         var(--ab-bg-color, #ffffff)         9px
     );
@@ -294,13 +298,23 @@
 
     @media (hover: hover) {
         .abstract-box--hover.abstract-box--bulletin:hover {
-            border-color: var(--ab-stripe-color, var(--ab-accent-color, #dc2626));
-            box-shadow: 0 0 0 1px var(--ab-stripe-color, var(--ab-accent-color, #dc2626));
+            border-color: var(--ab-accent-color, #dc2626);
+            box-shadow: 0 0 0 1px var(--ab-accent-color, #dc2626);
         }
     }
 
 .abstract-box--bulletin .abstract-box__title {
     font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WIDTH MODIFIER — Compact (centred, capped width)
+   ═══════════════════════════════════════════════════════════════ */
+
+.abstract-box--compact {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ═══════════════════════════════════════════════════════════════

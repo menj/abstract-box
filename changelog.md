@@ -4,6 +4,60 @@ All notable changes to the Abstract Box plugin are documented in this file.
 
 ---
 
+## 2.3.3 — 2026-03-10
+
+### Added — Box Width setting (Full / Compact)
+
+A new **Box Width** option is available under Appearance → Typography & Shape.
+
+- **Full width** (default) — box stretches to the full container width, unchanged from previous behaviour.
+- **Compact** — box is capped at `max-width: 520px` and centred with `margin: auto`, matching the square-ish card layout used by news summary boxes.
+- Applies via the `abstract-box--compact` modifier class — one CSS rule, no inline style injection.
+- Live preview updates immediately when the radio selection changes.
+- Setting stored as `box_width` in `abstract_box_options`; allowlist-validated (`full` / `compact`).
+- Preserved correctly across tab changes via hidden field serialisation.
+- `bulletin` added to `STYLE_CLASSES` array in `admin-settings.js` (was missing, causing bulletin class not to be cleared on style switch in the live preview).
+
+---
+
+## 2.3.2 — 2026-03-06
+
+### Fixed — Inner padding consistency across all styles; Bulletin top and left padding missing
+
+The Bulletin style had no `padding-top` or `padding-left`, causing title and body text to sit flush against the border. All styles now use a shared CSS custom property base for padding rhythm.
+
+- `--ab-pad-v: 20px` and `--ab-pad-h: 24px` declared on `.abstract-box` base rule.
+- All 8 styles use these variables rather than hardcoded values.
+- Card uses `calc(var(--ab-pad-v) + 4px) calc(var(--ab-pad-h) + 4px)` — extra room for elevated presentation.
+- Summary uses `calc(var(--ab-pad-v) + 2px) calc(var(--ab-pad-h) + 2px)` — slightly generous for the rounded style.
+- Bulletin padding corrected to all four sides: top and left use the base variables; right and bottom add the stripe width on top (`calc(stripe + pad-h)` and `calc(stripe + pad-v)` respectively).
+
+---
+
+## 2.3.1 — 2026-03-06
+
+### Added — Colour presets for Bulletin, Editorial, and Summary styles
+
+Previously no preset activated the Bulletin, Editorial, or Summary styles. Three presets added:
+
+- **Bulletin** — flat white background, near-black text, red (`#dc2626`) accent. Sets style to `bulletin`.
+- **Editorial** — flat white background, dark slate text, slate-grey (`#475569`) accent. Sets style to `editorial`.
+- **Summary** — violet-tinted background (`#f5f3ff` → `#ede9fe`), deep violet text, purple (`#7c3aed`) accent. Sets style to `summary`.
+
+Preset count increases from 8 to 11.
+
+---
+
+## 2.3.0 — 2026-03-06
+
+### Changed — Bulletin Stripe colour removed; Accent Colour controls the stripe
+
+The separate "Bulletin Stripe" colour option introduced in v2.2.9 has been removed. The Bulletin style border and diagonal stripe always use `--ab-accent-color`. A separate control added no meaningful flexibility — if the stripe needs to be a different colour, the Accent Colour is the correct control.
+
+**Bullet Dots** colour remains as an independent option, since bullets appear across all styles and may legitimately differ from the structural accent elements (borders, bars, lines).
+
+---
+
 ## 2.2.9 — 2026-03-06
 
 ### Added — Configurable bullet dot and bulletin stripe colours

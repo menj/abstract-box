@@ -28,7 +28,6 @@ class Assets {
         $bg_color_end  = sanitize_hex_color( $options['bg_color_end']  ?? '' ) ?: $defaults['bg_color_end'];
         $accent_color  = sanitize_hex_color( $options['accent_color']  ?? '' ) ?: $defaults['accent_color'];
         $bullet_color  = sanitize_hex_color( $options['bullet_color']  ?? '' );
-        $stripe_color  = sanitize_hex_color( $options['stripe_color']  ?? '' );
         $border_radius = min( 50, max( 0, absint( $options['border_radius'] ?? $defaults['border_radius'] ) ) );
 
         // Validate against the full six-family allowlist.
@@ -41,9 +40,6 @@ class Assets {
         $optional = '';
         if ( $bullet_color ) {
             $optional .= "    --ab-bullet-color:   {$bullet_color};\n";
-        }
-        if ( $stripe_color ) {
-            $optional .= "    --ab-stripe-color:   {$stripe_color};\n";
         }
 
         return ":root {\n"

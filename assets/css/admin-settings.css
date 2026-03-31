@@ -363,6 +363,19 @@
     min-width: 180px;
 }
 
+.abstract-box-settings .ab-typo-row__control--radios {
+    gap: 16px;
+}
+
+.abstract-box-settings .ab-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
 .abstract-box-settings .ab-unit {
     font-size: 12px;
     color: var(--ab-ui-text-muted);

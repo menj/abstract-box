@@ -46,7 +46,7 @@ class Settings {
 
         $sanitized['use_theme_css'] = ! empty( $input['use_theme_css'] );
 
-        $color_keys = array( 'title_color', 'text_color', 'bg_color', 'bg_color_end', 'accent_color', 'bullet_color', 'stripe_color' );
+        $color_keys = array( 'title_color', 'text_color', 'bg_color', 'bg_color_end', 'accent_color', 'bullet_color' );
         foreach ( $color_keys as $ck ) {
             $sanitized[ $ck ] = sanitize_hex_color( $input[ $ck ] ?? '' ) ?: $defaults[ $ck ];
         }
@@ -66,6 +66,10 @@ class Settings {
 
         $sanitized['custom_css_class'] = sanitize_html_class( $input['custom_css_class'] ?? '' );
         $sanitized['hover_effect']     = ! empty( $input['hover_effect'] );
+
+        $valid_widths        = array( 'full', 'compact' );
+        $sanitized['box_width'] = in_array( $input['box_width'] ?? '', $valid_widths, true )
+                                    ? $input['box_width'] : $defaults['box_width'];
 
         return $sanitized;
     }
@@ -244,6 +248,9 @@ class Settings {
             <button type="button" class="button abstract-box-preset-btn" data-preset="rose"><?php esc_html_e( 'Rose', 'abstract-box' ); ?></button>
             <button type="button" class="button abstract-box-preset-btn" data-preset="midnight"><?php esc_html_e( 'Midnight', 'abstract-box' ); ?></button>
             <button type="button" class="button abstract-box-preset-btn" data-preset="sand"><?php esc_html_e( 'Sand', 'abstract-box' ); ?></button>
+            <button type="button" class="button abstract-box-preset-btn" data-preset="bulletin"><?php esc_html_e( 'Bulletin', 'abstract-box' ); ?></button>
+            <button type="button" class="button abstract-box-preset-btn" data-preset="editorial"><?php esc_html_e( 'Editorial', 'abstract-box' ); ?></button>
+            <button type="button" class="button abstract-box-preset-btn" data-preset="summary"><?php esc_html_e( 'Summary', 'abstract-box' ); ?></button>
         </div>
         <?php
         $presets_html = ob_get_clean();
@@ -262,7 +269,6 @@ class Settings {
             'bg_color_end' => __( 'Background End', 'abstract-box' ),
             'accent_color' => __( 'Accent', 'abstract-box' ),
             'bullet_color' => __( 'Bullet Dots', 'abstract-box' ),
-            'stripe_color' => __( 'Bulletin Stripe', 'abstract-box' ),
         );
         ?>
         <div class="ab-info-card ab-colour-grid">
@@ -325,10 +331,29 @@ class Settings {
                     </select>
                 </div>
             </div>
+            <div class="ab-typo-row ab-typo-row--bordered">
+                <label class="ab-typo-row__label">
+                    <?php esc_html_e( 'Box Width', 'abstract-box' ); ?>
+                    <span class="ab-typo-row__hint"><?php esc_html_e( 'Full or compact (centred, max 520 px)', 'abstract-box' ); ?></span>
+                </label>
+                <div class="ab-typo-row__control ab-typo-row__control--radios">
+                    <label class="ab-radio-label">
+                        <input type="radio"
+                               name="abstract_box_options[box_width]"
+                               value="full"
+                               <?php checked( $opts['box_width'], 'full' ); ?> />
+                        <?php esc_html_e( 'Full width', 'abstract-box' ); ?>
+                    </label>
+                    <label class="ab-radio-label">
+                        <input type="radio"
+                               name="abstract_box_options[box_width]"
+                               value="compact"
+                               <?php checked( $opts['box_width'], 'compact' ); ?> />
+                        <?php esc_html_e( 'Compact', 'abstract-box' ); ?>
+                    </label>
+                </div>
+            </div>
         </div>
-        <?php
-
-        /* ── Getting Started ─────────────────────────────────────── */
         ?>
         <p class="ab-section-label"><?php esc_html_e( 'Getting Started', 'abstract-box' ); ?></p>
         <div class="ab-info-card">
@@ -482,7 +507,7 @@ class Settings {
         $defaults = Helpers::get_defaults();
 
         $tab_keys = array(
-            'appearance' => array( 'style', 'use_theme_css', 'title_color', 'text_color', 'bg_color', 'bg_color_end', 'accent_color', 'bullet_color', 'stripe_color', 'border_radius', 'font_family' ),
+            'appearance' => array( 'style', 'use_theme_css', 'title_color', 'text_color', 'bg_color', 'bg_color_end', 'accent_color', 'bullet_color', 'border_radius', 'font_family', 'box_width' ),
             'schema'     => array( 'enable_schema', 'schema_type' ),
             'advanced'   => array( 'custom_css_class', 'hover_effect' ),
         );
@@ -529,6 +554,9 @@ class Settings {
         if ( $modifier ) {
             $classes .= ' ' . $modifier;
         }
+        if ( 'compact' === ( $options['box_width'] ?? 'full' ) ) {
+            $classes .= ' abstract-box--compact';
+        }
 
         $font_stack = Helpers::font_stack( $options['font_family'] );
         $radius     = absint( $options['border_radius'] );
@@ -538,9 +566,6 @@ class Settings {
         $css_vars .= '--ab-accent-color: ' . sanitize_hex_color( $options['accent_color'] ) . '; ';
         if ( ! empty( $options['bullet_color'] ) ) {
             $css_vars .= '--ab-bullet-color: ' . sanitize_hex_color( $options['bullet_color'] ) . '; ';
-        }
-        if ( ! empty( $options['stripe_color'] ) ) {
-            $css_vars .= '--ab-stripe-color: ' . sanitize_hex_color( $options['stripe_color'] ) . '; ';
         }
         $css_vars .= '--ab-title-color: '  . sanitize_hex_color( $options['title_color'] )  . '; ';
         $css_vars .= '--ab-text-color: '   . sanitize_hex_color( $options['text_color'] )   . '; ';
